@@ -12,7 +12,11 @@ This is a React Native project built using Expo. Follow the instructions below t
 ## ติดตั้งตัว Project
 
   git clone https://github.com/username/repository-name.git
+  
+**ติดตั้ง Dependencies**
 
   npm install
+  
+**รันโปรเจค**
 
   npx expo start
