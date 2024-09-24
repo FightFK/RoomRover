@@ -7,6 +7,7 @@ import Register from '../Pages/register';
 import Home from '../Pages/Home';
 import Bill from '../Pages/Bill';
 import Billinfo from '../Pages/Billinfo';
+import News from '../Pages/News';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -41,6 +42,25 @@ const Routes = () => {
                 },
                 headerTintColor: '#fff',
             }}/>
+                
+                <Stack.Screen name="Login" component={Login} options={{
+                    headerShown: false
+                }}/>
+                <Stack.Screen name="SignUp" component={Register} options={{
+                    headerShown: false
+                }}/>
+                <Stack.Screen name="Home" component={Home} options={{
+                    headerShown: false
+                }}/>
+                <Stack.Screen name="News" component={News} options={{
+                    headerTitle: 'RoomRover',
+                    headerBackTitle: 'กลับ',
+                    headerStyle: {
+                        backgroundColor: '#29B6F6'
+                    },
+                    headerTintColor: '#fff',
+                }}/>
+                
             </Stack.Navigator>
         </NavigationContainer>
     )
