@@ -2,22 +2,31 @@ import React, { useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
 import {Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import styles from './Styles/login-style';
+import { useAuth } from '../../context/authContext';
 
 export default function Login({navigation}) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+  const auth = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    // มีไว้ก่อนยังไม่ทำ
-  const handleLogin = () => {
-   
-    if (username === '' || password === '') {
-      navigation.navigate('Home');
-      // Alert.alert('Error', 'Please fill in all fields.');
-    } else {
-      
-      Alert.alert('Success', 'Login successful!');
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("กรุณากรอกอีเมลและรหัสผ่าน");
+      return; // หยุดการทำงานถ้าอีเมลหรือรหัสผ่านว่าง
+    }
+  
+    try {
+      // เรียกใช้ฟังก์ชัน signInWithEmail จาก AuthContext
+      await auth.signInWithEmail(email, password);
+      navigation.navigate('Home'); // นำทางไปหน้า Home เท่านั้นถ้าสำเร็จ
+    } catch (error) {
+      // แสดงข้อความข้อผิดพลาดที่ได้รับจาก Firebase
+      Alert.alert("Error", error.message);
     }
   };
+  
+  
+
 
 
   return (
@@ -36,8 +45,9 @@ export default function Login({navigation}) {
         <TextInput
           style={styles.input}
           placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
           autoCapitalize="none"
         />
         <Text style={styles.label}>Password</Text>
@@ -52,8 +62,8 @@ export default function Login({navigation}) {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <Text>Don't Have Any Account ?
-        </Text>
+        <Text>Don't Have Any Account ?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}><Text>Sign Up</Text></TouchableOpacity>
       </View>
      
     </SafeAreaView>

@@ -4,7 +4,10 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import styles from './Styles/Home-Style'; 
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from '../../context/authContext';
 function Home() {
+  const auth = useAuth();
+  console.log("User Email:", auth.currentUser.email);
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Banner */}
@@ -28,8 +31,7 @@ function Home() {
         <TouchableOpacity style={styles.button}>
           <FontAwesome name="envelope" size={32} color="black" />
           <Text style={styles.buttonText}>Message</Text>
-        </TouchableOpacity>
-       
+        </TouchableOpacity>       
       </View>
     </SafeAreaView>
   );
