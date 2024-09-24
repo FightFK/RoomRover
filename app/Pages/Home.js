@@ -9,7 +9,7 @@ function Home() {
   const auth = useAuth();
   console.log("User Email:", auth.currentUser.email);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Top Banner */}
       <Image 
         source={require('../../assets/Room.png')} 
@@ -19,7 +19,7 @@ function Home() {
 
       {/* Buttons Container */}
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Bill')}>
           <FontAwesome name="file-text" size={32} color="black" />
           <Text style={styles.buttonText}>Bill Payment</Text>
         </TouchableOpacity>
@@ -33,7 +33,7 @@ function Home() {
           <Text style={styles.buttonText}>Message</Text>
         </TouchableOpacity>       
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
