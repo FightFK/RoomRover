@@ -3,6 +3,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import styles from './Styles/login-style';
 import { useAuth } from '../../context/authContext';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function Login({navigation}) {
   const auth = useAuth();
@@ -40,8 +42,11 @@ export default function Login({navigation}) {
        <View style={styles.container}>
         <Text style={styles.header}>Welcome</Text>
         <Text style={styles.subHeader}>Login To Your Account</Text>
+        <View style={styles.logincontainer}>
+        <AntDesign name="user" size={24} color="black" />
+        <Text style={styles.label}>Email</Text>
+        </View>
         
-        <Text style={styles.label}>Username</Text>
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -50,7 +55,11 @@ export default function Login({navigation}) {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <Text style={styles.label}>Password</Text>
+        <View style={styles.logincontainer}>
+        <MaterialIcons name="password" size={24} color="black" />
+        <Text style={styles.label}> Password</Text>
+        </View>
+        
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -62,8 +71,13 @@ export default function Login({navigation}) {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <Text>Don't Have Any Account ?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}><Text>Sign Up</Text></TouchableOpacity>
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>Don't Have Any Account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <Text style={styles.signupLink}> Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      
       </View>
      
     </SafeAreaView>

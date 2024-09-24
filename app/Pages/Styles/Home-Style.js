@@ -4,47 +4,63 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-},
   container: {
-  
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
+  header: {
+    backgroundColor: 'white',
+    padding: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  greeting: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  email: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  logoutButton: {
+    padding: 8,
+    backgroundColor: '#ff4757', // Change to your preferred color
+    borderRadius: 5,
+      flexDirection: 'row'
+  },
+  logoutText: {
+    color: 'white',
+    fontWeight: 'bold',
+    
   },
   banner: {
     width: '100%',
-    height: 200,
+    height: 200, // Adjust based on your image
     resizeMode: 'cover',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 10,
     textAlign: 'center',
+    marginVertical: 16,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    margin: 10,
-    justifyContent:'center'
+    flexDirection: 'column', // Change to column for vertical layout
+    alignItems: 'center', // Center the buttons horizontally
+    marginTop: 20,
+    paddingHorizontal: 16, // Optional: Add padding for aesthetics
   },
   button: {
-    backgroundColor: '#F0F0F0',
-    width: (width - 40) / 1, // Adjusted width for 3 columns
-    height: 120,
-    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 16,
     borderRadius: 10,
-    marginBottom: 30,
-    marginTop:15,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 3,
+    width: '100%', // Adjust width to full for vertical buttons
+    marginBottom: 16, // Space between buttons
   },
   buttonText: {
-    marginTop: 5,
+    marginTop: 8,
   },
 });
 

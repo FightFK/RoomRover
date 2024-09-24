@@ -1,21 +1,66 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet , TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useAuth } from '../../context/authContext';
+import { db } from '../../config/firebase-config';
+import { doc, getDoc } from 'firebase/firestore';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
-export default function Billinfo() {
-    const [status, setStatus] = useState('ยังไม่ชำระ');
-    const [priceRoom, setPriceRoom] = useState('5000');
-    const [priceWater, setPriceWater] = useState('300');
-    const [priceElectic, setPriceElectic] = useState('400');
+export default function Billinfo({ route }) {
+    const { billId } = route.params; // Get the billId from params
+    const auth = useAuth();
+    const [billDetails, setBillDetails] = useState(null); // State to hold bill details
 
-    const total = parseFloat(priceRoom) + parseFloat(priceWater) + parseFloat(priceElectic);
+    useEffect(() => {
+        const fetchBillDetails = async () => {
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const uid = user.uid;
+                    const billRef = doc(db, 'bills', uid, 'userBills', billId); // Access specific bill document
+                    const billSnap = await getDoc(billRef);
+                    
+
+                    if (billSnap.exists()) {
+                        setBillDetails(billSnap.data()); // Set the bill details
+                    } else {
+                        console.log("No such bill!");
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching bill details: ", error);
+            }
+        };
+
+        fetchBillDetails(); // Fetch bill details on component mount
+    }, [billId, auth]);
+
+    // Render loading or error state
+    if (!billDetails) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.text}>Loading bill details...</Text>
+            </View>
+        );
+    }
+
+    const { 
+        status = 'ยังไม่ชำระ', 
+        priceRoom = '0', 
+        priceWater = '0', 
+        priceElectric = '0' 
+    } = billDetails; // Default values
+
+    const total = parseFloat(priceRoom) + parseFloat(priceWater) + parseFloat(priceElectric);
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>บิลค่าเช่า</Text>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+            
+            <Text style={styles.title}>บิลค่าเช่า <FontAwesome6 name="money-bills" size={24} color="green" /></Text>
+            <Text></Text>
             <View style={styles.card}>
                 <View style={styles.row}>
                     <Text style={styles.cardTitle}>สถานะ</Text>
-                    <Text style={styles.cardContent}>{status}</Text>
+                    <Text style={[styles.cardContent, { color: status === 'ชำระแล้ว' ? 'green' : 'red' }]}>{status}</Text>
                 </View>
                 <Text style={styles.cardTitle2}>รายการ</Text>
 
@@ -31,7 +76,7 @@ export default function Billinfo() {
 
                 <View style={styles.row}>
                     <Text style={styles.cardTitle}>ค่าไฟฟ้า</Text>
-                    <Text style={styles.cardContent}>{priceElectic} บาท</Text>
+                    <Text style={styles.cardContent}>{priceElectric} บาท</Text>
                 </View>
 
                 <View style={styles.row}>
@@ -40,42 +85,42 @@ export default function Billinfo() {
                 </View>
                 {ShowButton(status)}
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
-function ShowButton (status){
-        if (status === 'ยังไม่ชำระ') {
-            return (
-                <TouchableOpacity style={styles.button}>
-                    <View >
-                        <Text style={styles.buttontext}>ชำระเงิน</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        }
-        return null 
+function ShowButton(status) {
+    if (status === 'ยังไม่ชำระ') {
+        return (
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttontext}>ชำระเงิน</Text>
+            </TouchableOpacity>
+        );
+    }
+    return null;
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         backgroundColor: '#F5F5F5',
+        padding: 20,
     },
-    text: {
+    scrollContainer: {
+        paddingBottom: 20,
+    },
+    title: {
         marginTop: 15,
         marginLeft: 15,
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
+        color: '#333',
     },
     card: {
-        flex: 1,
         backgroundColor: '#fff',
         borderRadius: 10,
-        overflow: 'hidden',
+        padding: 20,
         marginVertical: 10,
-        padding: 15,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 10,
@@ -85,37 +130,35 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 5,
+        marginVertical: 10,
     },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
+        color: '#333',
     },
     cardTitle2: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         backgroundColor: '#D9D9D9',
         paddingVertical: 5,
         paddingHorizontal: 10,
-        marginTop: 10,
+        marginTop: 15,
+        borderRadius: 5,
     },
     cardContent: {
         fontSize: 16,
         color: '#444',
     },
     button: {
-        width: 'auto',
-        height: 'auto',
-        padding: 7,
+        padding: 10,
         backgroundColor: '#2B4BF2',
-        position: 'absolute',
-        bottom: 370,  // Distance from the bottom of the screen
-        right: 20,   // Distance from the right of the screen
         borderRadius: 5,
+        marginTop: 20,
+        alignItems: 'center',
     },
     buttontext: {
-        fontSize:20,
+        fontSize: 20,
         color: '#fff',
-        textAlign: 'center'
     },
 });

@@ -1,15 +1,30 @@
-// HomeScreen.js
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
-import styles from './Styles/Home-Style'; 
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from '../../context/authContext';
-function Home() {
+import styles from './Styles/Home-Style';
+
+function Home({ navigation }) {
   const auth = useAuth();
-  console.log("User Email:", auth.currentUser.email);
+
+  const handleLogout = async () => {
+    await auth.logout();
+    navigation.navigate('Login'); // Navigate to Login screen after logout
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <Text style={styles.greeting}>Hello,</Text>
+        <Text style={styles.email}>{auth.currentUser?.email}</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <MaterialIcons name="logout" size={15} color="black" />
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* Top Banner */}
       <Image 
         source={require('../../assets/Room.png')} 
@@ -17,9 +32,9 @@ function Home() {
       />
       <Text style={styles.title}>My Room</Text>
 
-      {/* Buttons Container */}
+      {/* Buttons Container (Vertical Layout) */}
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Bill')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Bill')}>
           <FontAwesome name="file-text" size={32} color="black" />
           <Text style={styles.buttonText}>Bill Payment</Text>
         </TouchableOpacity>
@@ -27,14 +42,12 @@ function Home() {
           <MaterialIcons name="report" size={32} color="black" />
           <Text style={styles.buttonText}>Report</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.button}>
           <FontAwesome name="envelope" size={32} color="black" />
           <Text style={styles.buttonText}>Message</Text>
         </TouchableOpacity>       
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
-
 export default Home;

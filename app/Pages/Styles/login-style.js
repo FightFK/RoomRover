@@ -60,7 +60,26 @@ const styles = StyleSheet.create({
         fontWeight: 'bold', // ทำให้ตัวอักษรหนา
         color: '#333', // สีของข้อความ
         marginBottom: 8, // ระยะห่างด้านล่าง
-      }
+      },
+      logincontainer:{
+        flexDirection: 'row',
+      },
+      signupContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 16, // Add some margin on top for spacing
+      },
+      signupText: {
+        fontSize: 16,
+        color: 'gray', // Change color for better visibility
+      },
+      signupLink: {
+        fontSize: 16,
+        color: '#1E90FF', // Change link color to blue
+        fontWeight: 'bold',
+        textDecorationLine: 'underline', // Underline to indicate it's a link
+      },
+    
 });
 
 export default styles;

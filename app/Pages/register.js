@@ -88,10 +88,12 @@ export default function Signup({ navigation }) {
                 <TouchableOpacity style={styles.button} onPress={handleSignup}>
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
-                <Text>Already have an account?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text>Sign In</Text>
-                </TouchableOpacity>
+                <View style={styles.signupContainer}>
+                    <Text style={styles.signupText}>Don't Have Any Account?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.signupLink}> Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );
