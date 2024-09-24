@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useAuth } from '../../context/authContext';
 import { db } from '../../config/firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
@@ -9,6 +9,7 @@ export default function Billinfo({ route }) {
     const { billId } = route.params; // Get the billId from params
     const auth = useAuth();
     const [billDetails, setBillDetails] = useState(null); // State to hold bill details
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
         const fetchBillDetails = async () => {
@@ -19,7 +20,6 @@ export default function Billinfo({ route }) {
                     const billRef = doc(db, 'bills', uid, 'userBills', billId); // Access specific bill document
                     const billSnap = await getDoc(billRef);
                     
-
                     if (billSnap.exists()) {
                         setBillDetails(billSnap.data()); // Set the bill details
                     } else {
@@ -28,17 +28,20 @@ export default function Billinfo({ route }) {
                 }
             } catch (error) {
                 console.error("Error fetching bill details: ", error);
+            } finally {
+                setLoading(false); // Stop loading when done
             }
         };
 
         fetchBillDetails(); // Fetch bill details on component mount
     }, [billId, auth]);
 
-    // Render loading or error state
-    if (!billDetails) {
+    // Render loading state
+    if (loading) {
         return (
-            <View style={styles.container}>
-                <Text style={styles.text}>Loading bill details...</Text>
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#2B4BF2" />
+                <Text style={styles.loadingText}>Loading bill details...</Text>
             </View>
         );
     }
@@ -48,15 +51,13 @@ export default function Billinfo({ route }) {
         priceRoom = '0', 
         priceWater = '0', 
         priceElectric = '0' 
-    } = billDetails; // Default values
+    } = billDetails || {}; // Default values
 
     const total = parseFloat(priceRoom) + parseFloat(priceWater) + parseFloat(priceElectric);
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            
             <Text style={styles.title}>บิลค่าเช่า <FontAwesome6 name="money-bills" size={24} color="green" /></Text>
-            <Text></Text>
             <View style={styles.card}>
                 <View style={styles.row}>
                     <Text style={styles.cardTitle}>สถานะ</Text>
@@ -115,6 +116,17 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         color: '#333',
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5',
+    },
+    loadingText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: '#666',
     },
     card: {
         backgroundColor: '#fff',

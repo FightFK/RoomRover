@@ -1,15 +1,19 @@
-import React from 'react'
+import React from 'react'; 
 import { View, Text, StyleSheet } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons'; // You can install this package if not already
 
 export default function News() {
     return (
-    <View style={styles.card}>
-        <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>ข่าวสารวันนี้</Text>
-            <Text style={styles.cardDescription}>วันนี้น้ำไม่ไหลนะครับ</Text>
+        <View style={styles.card}>
+            <View style={styles.cardContent}>
+                <View style={styles.headerContainer}>
+                    <FontAwesome name="bell" size={24} color="#FFA500" />
+                    <Text style={styles.cardTitle}>ข่าวสารวันนี้</Text>
+                </View>
+                <Text style={styles.cardDescription}>วันนี้น้ำไม่ไหลนะครับ</Text>
+            </View>
         </View>
-    </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -27,13 +31,20 @@ const styles = StyleSheet.create({
     cardContent: {
         padding: 15,
     },
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
     cardTitle: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
+        marginLeft: 10,
+        color: '#333', // Darker color for better readability
     },
     cardDescription: {
-        marginTop: 10,
-        fontSize: 14,
-        color: '#444',
+        fontSize: 16,
+        color: '#555', // Softer color for description
+        lineHeight: 22, // Increase line height for better spacing
     },
 });

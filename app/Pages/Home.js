@@ -42,7 +42,7 @@ function Home({ navigation }) {
           <MaterialIcons name="report" size={32} color="black" />
           <Text style={styles.buttonText}>Report</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
           <FontAwesome name="envelope" size={32} color="black" />
           <Text style={styles.buttonText}>Message</Text>
         </TouchableOpacity>       

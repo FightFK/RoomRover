@@ -1,49 +1,58 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Image, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import stylesz from './Styles/register-style';
 import styles from './Styles/login-style';
 import { useAuth } from '../../context/authContext';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
+import AntDesign from '@expo/vector-icons/AntDesign';
+import CustomAlert from './components/CustomAlert'; // Adjust the import path as necessary
 
 export default function Signup({ navigation }) {
     const auth = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState(''); // ฟิลด์สำหรับยืนยันรหัสผ่าน
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
-    // ฟังก์ชันสำหรับตรวจสอบรูปแบบอีเมล
+    // Function to validate email format
     const isValidEmail = (email) => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // รูปแบบอีเมลที่ถูกต้อง
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Correct email format
         return emailPattern.test(email);
     };
 
     const handleSignup = async () => {
         if (!email || !password || !confirmPassword) {
-            Alert.alert("กรุณากรอกอีเมลและรหัสผ่านทั้งหมด");
-            return; // หยุดการทำงานถ้าอีเมลหรือรหัสผ่านว่าง
+            setAlertMessage("กรุณากรอกอีเมลและรหัสผ่านทั้งหมด");
+            setAlertVisible(true);
+            return; // Stop execution if any field is empty
         }
 
         if (!isValidEmail(email)) {
-            Alert.alert("กรุณากรอกอีเมลที่ถูกต้อง");
-            return; // หยุดการทำงานถ้าอีเมลไม่ถูกต้อง
+            setAlertMessage("กรุณากรอกอีเมลที่ถูกต้อง");
+            setAlertVisible(true);
+            return; // Stop execution if email is invalid
         }
 
         if (password.length < 6) {
-            Alert.alert("รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร");
-            return; // หยุดการทำงานถ้ารหัสผ่านน้อยกว่า 6 ตัวอักษร
+            setAlertMessage("รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร");
+            setAlertVisible(true);
+            return; // Stop execution if password is too short
         }
 
         if (password !== confirmPassword) {
-            Alert.alert('Error', 'รหัสผ่านไม่ตรงกัน');
-            return;
+            setAlertMessage("รหัสผ่านไม่ตรงกัน");
+            setAlertVisible(true);
+            return; // Stop execution if passwords do not match
         }
 
         try {
             await auth.signUpWithEmail(email, password);
-            // เปลี่ยนเส้นทางไปยังหน้าหลังจากลงทะเบียนสำเร็จ
-            navigation.navigate('Home');
+            navigation.navigate('Home'); // Navigate to Home after successful signup
         } catch (error) {
-            Alert.alert('Error', error.message); // แสดงข้อความข้อผิดพลาด
+            setAlertMessage(error.message); // Show error message
+            setAlertVisible(true);
         }
     }
 
@@ -59,7 +68,9 @@ export default function Signup({ navigation }) {
                 <Text style={styles.header}>Register</Text>
                 <Text style={styles.subHeader}>Create a new account</Text>
                 
-                <Text style={styles.label}>Email</Text>
+                <Text style={styles.label}>
+                    <AntDesign name="user" size={24} color="black" /> Email
+                </Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
@@ -68,7 +79,9 @@ export default function Signup({ navigation }) {
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
-                <Text style={styles.label}>Password</Text>
+                <Text style={styles.label}>
+                    <MaterialIcons name="password" size={24} color="black" /> Password
+                </Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Password"
@@ -76,7 +89,9 @@ export default function Signup({ navigation }) {
                     onChangeText={setPassword}
                     secureTextEntry
                 />
-                <Text style={styles.label}>Confirm Password</Text>
+                <Text style={styles.label}>
+                    <MaterialIcons name="password" size={24} color="black" /> Confirm Password
+                </Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Confirm Password"
@@ -91,10 +106,17 @@ export default function Signup({ navigation }) {
                 <View style={styles.signupContainer}>
                     <Text style={styles.signupText}>Don't Have Any Account?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styles.signupLink}> Sign Up</Text>
+                        <Text style={styles.signupLink}> Login </Text>
                     </TouchableOpacity>
                 </View>
             </View>
+
+            {/* Custom Alert */}
+            <CustomAlert 
+                visible={alertVisible} 
+                onDismiss={() => setAlertVisible(false)} 
+                message={alertMessage} 
+            />
         </SafeAreaView>
     );
 }
