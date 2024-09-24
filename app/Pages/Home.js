@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
-import styles from './Styles/็Home-Style'; 
+import styles from './Styles/Home-Style'; 
 import { SafeAreaView } from "react-native-safe-area-context";
 function Home() {
   return (
