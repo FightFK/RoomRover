@@ -9,7 +9,7 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState(''); // ฟิลด์สำหรับยืนยันรหัสผ่าน
 
     const handleSignup = () => {
- 
+
         if (username === '' || password === '' || confirmPassword === '') {
             Alert.alert('Error', 'Please fill in all fields.');
         } else if (password !== confirmPassword) {
@@ -22,7 +22,7 @@ export default function Signup() {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-           <View style={stylesz.imgholder}>
+          <View style={stylesz.imgholder}>
         <Image 
           source={require('../../assets/Room.png')} 
           style={styles.img}

@@ -5,6 +5,7 @@ import Getstart from '../Pages/Getstart'
 import Login from '../Pages/login';
 import Register from '../Pages/register';
 import Home from '../Pages/Home';
+import News from '../Pages/News';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -23,6 +24,15 @@ const Routes = () => {
                 <Stack.Screen name="Home" component={Home} options={{
                     headerShown: false
                 }}/>
+                <Stack.Screen name="News" component={News} options={{
+                    headerTitle: 'RoomRover',
+                    headerBackTitle: 'กลับ',
+                    headerStyle: {
+                        backgroundColor: '#29B6F6'
+                    },
+                    headerTintColor: '#fff',
+                }}/>
+                
             </Stack.Navigator>
         </NavigationContainer>
     )

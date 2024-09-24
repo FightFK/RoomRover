@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import styles from './Styles/Home-Style'; 
 import { SafeAreaView } from "react-native-safe-area-context";
-function Home() {
+function Home({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Banner */}
@@ -25,11 +25,10 @@ function Home() {
           <Text style={styles.buttonText}>Report</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
           <FontAwesome name="envelope" size={32} color="black" />
-          <Text style={styles.buttonText}>Message</Text>
+          <Text style={styles.buttonText}>News</Text>
         </TouchableOpacity>
-       
       </View>
     </SafeAreaView>
   );
