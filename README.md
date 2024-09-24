@@ -11,7 +11,7 @@ This is a React Native project built using Expo. Follow the instructions below t
 
 ## ติดตั้งตัว Project
 
-  git clone https://github.com/username/repository-name.git
+  git clone https://github.com/FightFK/RoomRover.git
   
 **ติดตั้ง Dependencies**
 
