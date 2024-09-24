@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
       imgholder: {
         alignItems: 'center',
         marginTop:-150,
-     
       },
       img: {
         width: 150, // กำหนดความกว้าง

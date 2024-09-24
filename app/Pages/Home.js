@@ -3,10 +3,9 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import styles from './Styles/Home-Style'; 
-import { SafeAreaView } from "react-native-safe-area-context";
-function Home() {
+function Home({navigation}) {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Top Banner */}
       <Image 
         source={require('../../assets/Room.png')} 
@@ -16,7 +15,7 @@ function Home() {
 
       {/* Buttons Container */}
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Bill')}>
           <FontAwesome name="file-text" size={32} color="black" />
           <Text style={styles.buttonText}>Bill Payment</Text>
         </TouchableOpacity>
@@ -29,9 +28,9 @@ function Home() {
           <FontAwesome name="envelope" size={32} color="black" />
           <Text style={styles.buttonText}>Message</Text>
         </TouchableOpacity>
-       
+      
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -9,7 +9,7 @@ export default function Login({navigation}) {
 
     // มีไว้ก่อนยังไม่ทำ
   const handleLogin = () => {
-   
+  
     if (username === '' || password === '') {
       navigation.navigate('Home');
       // Alert.alert('Error', 'Please fill in all fields.');
