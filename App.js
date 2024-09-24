@@ -1,17 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import Home from './app/Pages/Home';  // Path to your Home component
-import Getstart from './app/Pages/Getstart';
-import Login from './app/Pages/login';
-import Signup  from './app/Pages/register';
+import Routes from './app/routes';
 export default function App() {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      {/* <Getstart />  */}
-      {/* <Home /> */}
-      {/* <Login /> */}
-      <Signup />
+      <Routes />
     </View>
   );
 }

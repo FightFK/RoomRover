@@ -1,14 +1,14 @@
 import { ImageBackground, StyleSheet, Text, View, TouchableOpacity  } from 'react-native';
 
-export default function Getstart(props) {
+export default function Getstart({navigation}) {
     
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../../assets/Room.png')} style={styles.image}>
                 <Text style={styles.textapp}>RoomRover</Text>
                 <Text style={styles.textabout}>Roomservice & Management</Text>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>GET START</Text>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.buttonText}>GET START</Text>
                 </TouchableOpacity>
             </ImageBackground>
         </View>

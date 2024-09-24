@@ -46,12 +46,14 @@ const styles = StyleSheet.create({
       button: {
         backgroundColor: '#29B6F6',
         paddingVertical: 15,
+        marginLeft:30,
+        marginRight:30,
         borderRadius: 10,
       },
       buttonText: {
         color: '#fff',
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold',
       },
       label: {

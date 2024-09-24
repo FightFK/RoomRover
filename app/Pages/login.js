@@ -3,15 +3,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import styles from './Styles/login-style';
 
-export default function Login() {
+export default function Login({navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     // มีไว้ก่อนยังไม่ทำ
   const handleLogin = () => {
    
-    if (email === '' || password === '') {
-      Alert.alert('Error', 'Please fill in all fields.');
+    if (username === '' || password === '') {
+      navigation.navigate('Home');
+      // Alert.alert('Error', 'Please fill in all fields.');
     } else {
       
       Alert.alert('Success', 'Login successful!');
@@ -37,7 +38,6 @@ export default function Login() {
           placeholder="Username"
           value={username}
           onChangeText={setUsername}
-          keyboardType="email-address"
           autoCapitalize="none"
         />
         <Text style={styles.label}>Password</Text>
