@@ -34,7 +34,7 @@ function Home({ navigation }) {
 
       {/* Buttons Container (Vertical Layout) */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Bill')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('BillAdd')}>
           <FontAwesome name="file-text" size={32} color="black" />
           <Text style={styles.buttonText}>Bill Payment</Text>
         </TouchableOpacity>

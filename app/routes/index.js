@@ -8,6 +8,7 @@ import Home from '../Pages/Home';
 import Bill from '../Pages/Bill';
 import Billinfo from '../Pages/Billinfo';
 import News from '../Pages/News';
+import BillAdd from '../Pages/BillAdd';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -49,7 +50,15 @@ const Routes = () => {
                         backgroundColor: '#29B6F6'
                     },
                     headerTintColor: '#fff',
-                }}/>
+            }}/>
+            <Stack.Screen name="BillAdd" component={BillAdd} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
                 
             </Stack.Navigator>
         </NavigationContainer>
