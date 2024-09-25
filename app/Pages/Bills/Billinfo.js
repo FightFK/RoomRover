@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { useAuth } from '../../context/authContext';
-import { db } from '../../config/firebase-config';
+import { useAuth } from '../../../context/authContext';
+import { db } from '../../../config/firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 

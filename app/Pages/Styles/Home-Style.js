@@ -12,12 +12,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-  },
+    justifyContent: 'space-between', // จัดตำแหน่งให้ปุ่มล็อกเอาต์อยู่ทางขวา
+  },  
+  greetingContainer: {
+    flexDirection: 'row', // จัดเรียงข้อความในแนวนอน
+    alignItems: 'center', // จัดให้อยู่ตรงกลางในแนวดิ่ง
+  },  
   greeting: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginRight:10,
   },
   email: {
     fontSize: 16,

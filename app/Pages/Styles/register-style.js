@@ -1,63 +1,60 @@
-// Styles/Home-Screen.js
 import { StyleSheet } from "react-native";
-
+// Example styles
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: '#ffffff',
+    },
+    container: {
+        flex: 1,
         padding: 20,
-      },
-      imgholder: {
-        alignItems: 'center',
-        marginTop:-50,
-      },
-      img: {
-        width: 150, // กำหนดความกว้าง
-        height: 150, // กำหนดความสูง
-        borderRadius: 75, // ให้เป็นรูปกลม
-      },
-      container: {
-        width: '100%',
-      },
-      header: {
+        justifyContent: 'center',
+    },
+    header: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginTop:10,
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    subHeader: {
+        fontSize: 16,
         marginBottom: 20,
         textAlign: 'center',
-    
-      },
-      subHeader: {
+        color: '#888888',
+    },
+    label: {
         fontSize: 16,
-        marginBottom: 40,
-        textAlign: 'center',
-      },
-      input: {
-        height: 50,
-        borderColor: '#ccc',
+        marginBottom: 5,
+    },
+    input: {
+        height: 45,
+        borderColor: '#cccccc',
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
-        marginBottom: 20,
-      },
-      button: {
-        backgroundColor: '#29B6F6',
-        paddingVertical: 15,
-        borderRadius: 10,
-      },
-      buttonText: {
-        color: '#fff',
+        marginBottom: 15,
+    },
+    button: {
+        backgroundColor: '#2B4BF2',
+        paddingVertical: 12,
+        borderRadius: 5,
+        marginTop: 10,
+    },
+    buttonText: {
+        color: '#ffffff',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 18,
+    },
+    signupContainer: {
+        marginTop: 20,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    signupText: {
+        color: '#888888',
+    },
+    signupLink: {
+        color: '#2B4BF2',
         fontWeight: 'bold',
-      },
-      label: {
-        fontSize: 16, // ขนาดตัวอักษร
-        fontWeight: 'bold', // ทำให้ตัวอักษรหนา
-        color: '#333', // สีของข้อความ
-        marginBottom: 8, // ระยะห่างด้านล่าง
-      }
+    },
 });
-
-export default styles;

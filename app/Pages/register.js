@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Image, View, Text, TextInput, TouchableOpacity,StyleSheet } from 'react-native';
 import stylesz from './Styles/register-style';
 import styles from './Styles/login-style';
 import { useAuth } from '../../context/authContext';
@@ -13,6 +13,8 @@ export default function Signup({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [displayName, setDisplayName] = useState('');  // เพิ่มฟิลด์สำหรับ displayName
+    const [roomNums, setroomNums] = useState('');  // เพิ่มฟิลด์สำหรับ displayName
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
@@ -23,8 +25,8 @@ export default function Signup({ navigation }) {
     };
 
     const handleSignup = async () => {
-        if (!email || !password || !confirmPassword) {
-            setAlertMessage("กรุณากรอกอีเมลและรหัสผ่านทั้งหมด");
+        if (!email || !password || !confirmPassword || !displayName) {
+            setAlertMessage("กรุณากรอกข้อมูลให้ครบถ้วน");
             setAlertVisible(true);
             return; // Stop execution if any field is empty
         }
@@ -48,13 +50,14 @@ export default function Signup({ navigation }) {
         }
 
         try {
-            await auth.signUpWithEmail(email, password);
+            // สมัครสมาชิกพร้อมเก็บ displayName และกำหนด role เป็น 'user'
+            await auth.signUpWithEmail(email, password,roomNums, displayName, 'user');
             navigation.navigate('Home'); // Navigate to Home after successful signup
         } catch (error) {
             setAlertMessage(error.message); // Show error message
             setAlertVisible(true);
         }
-    }
+    };
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -68,6 +71,26 @@ export default function Signup({ navigation }) {
                 <Text style={styles.header}>Register</Text>
                 <Text style={styles.subHeader}>Create a new account</Text>
                 
+                {/* Display Name Field */}
+                <Text style={styles.label}>
+                    <AntDesign name="user" size={24} color="black" /> Display Name
+                </Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Display Name"
+                    value={displayName}
+                    onChangeText={setDisplayName}
+                />
+                 <Text style={styles.label}>
+                    <AntDesign name="user" size={24} color="black" /> Room Number
+                </Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="RoomNumber"
+                    value={roomNums}
+                    onChangeText={setroomNums}
+                />
+
                 <Text style={styles.label}>
                     <AntDesign name="user" size={24} color="black" /> Email
                 </Text>

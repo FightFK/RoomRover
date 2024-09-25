@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { db } from '../../config/firebase-config';
+import { db } from '../../../config/firebase-config';
 
 export default function Bill({ navigation }) {
     const [bills, setBills] = useState([]);

@@ -5,10 +5,12 @@ import Getstart from '../Pages/Getstart'
 import Login from '../Pages/login';
 import Register from '../Pages/register';
 import Home from '../Pages/Home';
-import Bill from '../Pages/Bill';
-import Billinfo from '../Pages/Billinfo';
+import Bill from '../Pages/Bills/Bill';
+import Billinfo from '../Pages/Bills/Billinfo';
 import News from '../Pages/News';
-import BillAdd from '../Pages/BillAdd';
+import BillAdd from '../Pages/Bills/BillAdd';
+import UserList from '../Pages/UserList';
+import BillList from '../Pages/Bills/BillList';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -59,6 +61,23 @@ const Routes = () => {
                 },
                 headerTintColor: '#fff',
             }}/>
+              <Stack.Screen name="UserList" component={UserList} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
+             <Stack.Screen name="BillList" component={BillList} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
+    
                 
             </Stack.Navigator>
         </NavigationContainer>
