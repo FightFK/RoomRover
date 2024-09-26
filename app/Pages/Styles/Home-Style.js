@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 16,
+    marginTop:-20,
+    marginVertical: 10,
   },
   buttonContainer: {
     flexDirection: 'column', // Change to column for vertical layout
@@ -61,12 +62,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     padding: 16,
     borderRadius: 10,
-    width: '100%', // Adjust width to full for vertical buttons
-    marginBottom: 16, // Space between buttons
+    width: '100%', 
+    marginTop:15,
+    // Shadow for iOS
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+
+  // Shadow for Android
+  elevation: 5,
   },
   buttonText: {
     marginTop: 8,
   },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    overflow: 'hidden',
+    margin: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 5, // Adds shadow for Android
+},
+cardContent: {
+    padding: 15,
+},
+headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+},
+cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    color: '#333', // Darker color for better readability
+},
+cardDescription: {
+    fontSize: 16,
+    color: '#555', // Softer color for description
+    lineHeight: 22, // Increase line height for better spacing
+},
 });
 
 export default styles;

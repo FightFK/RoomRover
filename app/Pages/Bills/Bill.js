@@ -51,12 +51,26 @@ export default function Bill({ navigation }) {
             <FlatList
                 data={bills}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
+                renderItem={({ item }) => (    
                     <TouchableOpacity onPress={() => navigation.navigate('Billinfo', { billId: item.id })}>
                         <View style={styles.card}>
                             <View style={styles.row}>
                                 <Text style={styles.cardTitle}>บิลค่าเช่า :</Text>
-                                <Text style={styles.cardTitle}>{item.month}</Text>
+                                    <Text style={styles.cardTitle}>
+                                                           {item.month === '1' ? 'เดือนมกราคม' :
+                        item.month === '02' ? 'เดือนกุมภาพันธ์' :
+                        item.month === '03' ? 'เดือนมีนาคม' :
+                        item.month === '04' ? 'เดือนเมษายน' :
+                        item.month === '05' ? 'เดือนพฤษภาคม' :
+                        item.month === '06' ? 'เดือนมิถุนายน' :
+                        item.month === '07' ? 'เดือนกรกฎาคม' :
+                        item.month === '08' ? 'เดือนสิงหาคม' :
+                        item.month === '09' ? 'เดือนกันยายน' :
+                        item.month === '10' ? 'เดือนตุลาคม' :
+                        item.month === '11' ? 'เดือนพฤศจิกายน' :
+                        item.month === '12' ? 'เดือนธันวาคม' :
+                        'เดือนไม่ทราบ'}
+                        </Text>
                                 <Text style={[styles.cardTitle, { color: item.status === 'ชำระแล้ว' ? 'green' : 'red' }]}>{item.status}</Text>
                             </View>
                         </View>

@@ -10,7 +10,7 @@ export default function Billinfo({ route }) {
     const auth = useAuth();
     const [billDetails, setBillDetails] = useState(null); // State to hold bill details
     const [loading, setLoading] = useState(true); // Loading state
-
+    
     useEffect(() => {
         const fetchBillDetails = async () => {
             try {
@@ -50,7 +50,8 @@ export default function Billinfo({ route }) {
         status = 'ยังไม่ชำระ', 
         priceRoom = '0', 
         priceWater = '0', 
-        priceElectric = '0' 
+        priceElectric = '0'
+   
     } = billDetails || {}; // Default values
 
     const total = parseFloat(priceRoom) + parseFloat(priceWater) + parseFloat(priceElectric);

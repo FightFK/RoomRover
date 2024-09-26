@@ -52,6 +52,16 @@ function Home({ navigation }) {
         source={require('../../assets/Room.png')} 
         style={styles.banner}
       />
+      <View style= {styles.card}>
+      <View style={styles.cardContent}>
+                <View style={styles.headerContainer}>
+                    <FontAwesome name="bell" size={24} color="#FFA500" />
+                    <Text style={styles.cardTitle}>ข่าวสารวันนี้</Text>
+                </View>
+                <Text style={styles.cardDescription}> Test</Text>
+        </View>
+      </View>
+       
      
 
       {/* Buttons Container (Vertical Layout) */}
@@ -62,14 +72,14 @@ function Home({ navigation }) {
             <FontAwesome name="file-text" size={32} color="black" />
             <Text style={styles.buttonText}>Bill Payment</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('ReportList')} >
             <MaterialIcons name="report" size={32} color="black" />
             <Text style={styles.buttonText}>Report</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
+          {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
             <FontAwesome name="envelope" size={32} color="black" />
             <Text style={styles.buttonText}>Message</Text>
-          </TouchableOpacity>       
+          </TouchableOpacity>        */}
         </View>
       )}
       {userRole === 'admin' && (
