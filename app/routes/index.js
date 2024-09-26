@@ -9,7 +9,7 @@ import Bill from '../Pages/Bills/Bill';
 import Billinfo from '../Pages/Bills/Billinfo';
 import News from '../Pages/News';
 import BillAdd from '../Pages/Bills/BillAdd';
-import UserList from '../Pages/UserList';
+import UserList from '../Pages/Bills/UserList';
 import BillList from '../Pages/Bills/BillList';
 import EditBills from '../Pages/Bills/EditBills';
 import ReportList from '../Pages/Reports/ReportList';

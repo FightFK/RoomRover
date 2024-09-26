@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, Modal } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../config/firebase-config';
+import { db } from '../../../config/firebase-config';
 import { FontAwesome } from '@expo/vector-icons'; // Importing FontAwesome for the close icon
 
 export default function UserList({ navigation }) {
@@ -12,7 +12,7 @@ export default function UserList({ navigation }) {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const usersRef = collection(db, 'users'); // Assuming you have a 'users' collection
+                const usersRef = collection(db, 'users'); 
                 const querySnapshot = await getDocs(usersRef);
                 const usersData = querySnapshot.docs.map(doc => ({
                     id: doc.id,
@@ -75,7 +75,7 @@ export default function UserList({ navigation }) {
                             <Text style={styles.modalButtonText}>เพิ่มบิล</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.modalButton} onPress={handleEditBill}>
-                            <Text style={styles.modalButtonText}>แก้ไขบิลก่อนหน้านี้</Text>
+                            <Text style={styles.modalButtonText}>ประวัติบิลก่อนหน้า</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

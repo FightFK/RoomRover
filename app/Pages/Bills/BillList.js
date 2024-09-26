@@ -40,11 +40,11 @@ export default function BillList({ route, navigation }) {
         fetchBillsAndDisplayName();
     }, [userId]);
 
+    // ส่ง uid และ billid
     const renderBillItem = ({ item }) => (
         <TouchableOpacity 
             style={styles.billItem}
-            // Navigate to edit bill
-            onPress={() => navigation.navigate('EditBills')}
+            onPress={() => navigation.navigate('EditBills', { billData: item, userId: userId })} // ส่ง userId และ billData
         >
             <Text style={styles.billText}>หมายเลขบิล: {item.id}</Text>
             <Text style={styles.billText}>เดือน: {item.month}</Text>
@@ -54,6 +54,9 @@ export default function BillList({ route, navigation }) {
             <Text style={styles.billText}>สถานะการชำระ: {item.status}</Text>
         </TouchableOpacity>
     );
+    
+    
+
 
     return (
         <View style={styles.container}>

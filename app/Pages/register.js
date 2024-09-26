@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Image, View, Text, TextInput, TouchableOpacity,StyleSheet } from 'react-native';
+import { Image, View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import stylesz from './Styles/register-style';
 import styles from './Styles/login-style';
 import { useAuth } from '../../context/authContext';
@@ -13,14 +13,13 @@ export default function Signup({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [displayName, setDisplayName] = useState('');  // เพิ่มฟิลด์สำหรับ displayName
-    const [roomNums, setroomNums] = useState('');  // เพิ่มฟิลด์สำหรับ displayName
+    const [displayName, setDisplayName] = useState('');
+    const [roomNums, setroomNums] = useState('');
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
-    // Function to validate email format
     const isValidEmail = (email) => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Correct email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailPattern.test(email);
     };
 
@@ -28,118 +27,125 @@ export default function Signup({ navigation }) {
         if (!email || !password || !confirmPassword || !displayName) {
             setAlertMessage("กรุณากรอกข้อมูลให้ครบถ้วน");
             setAlertVisible(true);
-            return; // Stop execution if any field is empty
+            return;
         }
 
         if (!isValidEmail(email)) {
             setAlertMessage("กรุณากรอกอีเมลที่ถูกต้อง");
             setAlertVisible(true);
-            return; // Stop execution if email is invalid
+            return;
         }
 
         if (password.length < 6) {
             setAlertMessage("รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร");
             setAlertVisible(true);
-            return; // Stop execution if password is too short
+            return;
         }
 
         if (password !== confirmPassword) {
             setAlertMessage("รหัสผ่านไม่ตรงกัน");
             setAlertVisible(true);
-            return; // Stop execution if passwords do not match
+            return;
         }
 
         try {
-            // สมัครสมาชิกพร้อมเก็บ displayName และกำหนด role เป็น 'user'
-            await auth.signUpWithEmail(email, password,roomNums, displayName, 'user');
-            navigation.navigate('Home'); // Navigate to Home after successful signup
+            await auth.signUpWithEmail(email, password, roomNums, displayName, 'user');
+            navigation.navigate('Home');
         } catch (error) {
-            setAlertMessage(error.message); // Show error message
+            setAlertMessage(error.message);
             setAlertVisible(true);
         }
     };
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={stylesz.imgholder}>
-                <Image 
-                    source={require('../../assets/Room.png')} 
-                    style={styles.img}
-                />
-            </View> 
             <View style={styles.container}>
-                <Text style={styles.header}>Register</Text>
-                <Text style={styles.subHeader}>Create a new account</Text>
-                
-                {/* Display Name Field */}
-                <Text style={styles.label}>
-                    <AntDesign name="user" size={24} color="black" /> Display Name
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Display Name"
-                    value={displayName}
-                    onChangeText={setDisplayName}
-                />
-                 <Text style={styles.label}>
-                    <AntDesign name="user" size={24} color="black" /> Room Number
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="RoomNumber"
-                    value={roomNums}
-                    onChangeText={setroomNums}
-                />
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <View style={stylesz.imgholder}>
+                        <Image 
+                            source={require('../../assets/Room.png')} 
+                            style={styles.img}
+                        />
+                    </View> 
+                    <Text style={styles.header}>Register</Text>
+                    <Text style={styles.subHeader}>Create a new account</Text>
 
-                <Text style={styles.label}>
-                    <AntDesign name="user" size={24} color="black" /> Email
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                />
-                <Text style={styles.label}>
-                    <MaterialIcons name="password" size={24} color="black" /> Password
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
-                <Text style={styles.label}>
-                    <MaterialIcons name="password" size={24} color="black" /> Confirm Password
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
-                />
-                
-                <TouchableOpacity style={styles.button} onPress={handleSignup}>
-                    <Text style={styles.buttonText}>Sign Up</Text>
-                </TouchableOpacity>
-                <View style={styles.signupContainer}>
-                    <Text style={styles.signupText}>Don't Have Any Account?</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styles.signupLink}> Login </Text>
+                    {/* Display Name Field */}
+                    <Text style={styles.label}>
+                        <AntDesign name="user" size={24} color="black" /> Display Name
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Display Name"
+                        value={displayName}
+                        onChangeText={setDisplayName}
+                    />
+                    
+                    {/* Room Number Field */}
+                    <Text style={styles.label}>
+                        <AntDesign name="home" size={24} color="black" /> Room Number
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Room Number"
+                        value={roomNums}
+                        onChangeText={setroomNums}
+                    />
+
+                    {/* Email Field */}
+                    <Text style={styles.label}>
+                        <MaterialIcons name="email" size={24} color="black" /> Email
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={setEmail}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                    />
+
+                    {/* Password Field */}
+                    <Text style={styles.label}>
+                        <MaterialIcons name="lock" size={24} color="black" /> Password
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry
+                    />
+
+                    {/* Confirm Password Field */}
+                    <Text style={styles.label}>
+                        <MaterialIcons name="lock" size={24} color="black" /> Confirm Password
+                    </Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        secureTextEntry
+                    />
+                    
+                    <TouchableOpacity style={styles.button} onPress={handleSignup}>
+                        <Text style={styles.buttonText}>Sign Up</Text>
                     </TouchableOpacity>
-                </View>
+                    <View style={styles.signupContainer}>
+                        <Text style={styles.signupText}>Don't Have Any Account?</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                            <Text style={styles.signupLink}> Login </Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                {/* Custom Alert */}
+                <CustomAlert 
+                    visible={alertVisible} 
+                    onDismiss={() => setAlertVisible(false)} 
+                    message={alertMessage} 
+                />
             </View>
-
-            {/* Custom Alert */}
-            <CustomAlert 
-                visible={alertVisible} 
-                onDismiss={() => setAlertVisible(false)} 
-                message={alertMessage} 
-            />
         </SafeAreaView>
     );
 }
