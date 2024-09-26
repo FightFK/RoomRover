@@ -11,6 +11,7 @@ import News from '../Pages/News';
 import BillAdd from '../Pages/Bills/BillAdd';
 import UserList from '../Pages/UserList';
 import BillList from '../Pages/Bills/BillList';
+import EditBills from '../Pages/Bills/EditBills';
 import ReportList from '../Pages/Reports/ReportList';
 import ReportAdd from '../Pages/Reports/ReportAdd';
 const Stack = createNativeStackNavigator();
@@ -63,7 +64,7 @@ const Routes = () => {
                 },
                 headerTintColor: '#fff',
             }}/>
-              <Stack.Screen name="UserList" component={UserList} options={{
+            <Stack.Screen name="UserList" component={UserList} options={{
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
@@ -71,7 +72,7 @@ const Routes = () => {
                 },
                 headerTintColor: '#fff',
             }}/>
-             <Stack.Screen name="BillList" component={BillList} options={{
+            <Stack.Screen name="BillList" component={BillList} options={{
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
@@ -79,8 +80,7 @@ const Routes = () => {
                 },
                 headerTintColor: '#fff',
             }}/>
-
-                 <Stack.Screen name="ReportList" component={ReportList} options={{
+            <Stack.Screen name="ReportList" component={ReportList} options={{
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
@@ -89,6 +89,14 @@ const Routes = () => {
                 headerTintColor: '#fff',
             }}/>
             <Stack.Screen name="ReportAdd" component={ReportAdd} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
+            <Stack.Screen name="EditBills" component={EditBills} options={{
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {

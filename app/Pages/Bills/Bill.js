@@ -57,7 +57,7 @@ export default function Bill({ navigation }) {
                             <View style={styles.row}>
                                 <Text style={styles.cardTitle}>บิลค่าเช่า :</Text>
                                     <Text style={styles.cardTitle}>
-                                                           {item.month === '1' ? 'เดือนมกราคม' :
+                                                            {item.month === '1' ? 'เดือนมกราคม' :
                         item.month === '02' ? 'เดือนกุมภาพันธ์' :
                         item.month === '03' ? 'เดือนมีนาคม' :
                         item.month === '04' ? 'เดือนเมษายน' :

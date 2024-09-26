@@ -43,7 +43,8 @@ export default function BillList({ route, navigation }) {
     const renderBillItem = ({ item }) => (
         <TouchableOpacity 
             style={styles.billItem}
-           // Navigate to edit bill
+            // Navigate to edit bill
+            onPress={() => navigation.navigate('EditBills')}
         >
             <Text style={styles.billText}>หมายเลขบิล: {item.id}</Text>
             <Text style={styles.billText}>เดือน: {item.month}</Text>
@@ -99,11 +100,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         shadowColor: '#000',
         shadowOpacity: 0.1,
-        shadowRadius: 5,
+        shadowRadius: 3,
         elevation: 3,
     },
     billText: {
         fontSize: 16,
+        marginBottom: 5,
         color: '#444',
     },
 });
