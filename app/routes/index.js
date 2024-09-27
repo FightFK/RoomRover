@@ -14,6 +14,8 @@ import BillList from '../Pages/Bills/BillList';
 import EditBills from '../Pages/Bills/EditBills';
 import ReportList from '../Pages/Reports/ReportList';
 import ReportAdd from '../Pages/Reports/ReportAdd';
+import ReportEdit from '../Pages/Reports/ReportEdit';
+import ReportAdminList from '../Pages/Reports/ReportAdminList';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -97,6 +99,22 @@ const Routes = () => {
                 headerTintColor: '#fff',
             }}/>
             <Stack.Screen name="EditBills" component={EditBills} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
+            <Stack.Screen name="ReportEdit" component={ReportEdit} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
+            <Stack.Screen name="ReportAdminList" component={ReportAdminList} options={{
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {

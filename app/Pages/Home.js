@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from '../../context/authContext';
 import { auth, db } from "../../config/firebase-config";
@@ -91,6 +92,10 @@ function Home({ navigation }) {
             <TouchableOpacity style={styles.button}>
               <FontAwesome name="user-plus" size={32} color="black" />
               <Text style={styles.buttonText}>เพิ่มผู้ใช้</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReportAdminList')}>
+              <AntDesign name="exclamationcircle" size={32} color="black" />
+              <Text style={styles.buttonText}>รายงานปัญหา</Text>
             </TouchableOpacity>
           </>
         ) : null}

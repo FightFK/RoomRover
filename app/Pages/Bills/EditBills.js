@@ -115,7 +115,6 @@ export default function EditBills({ route, navigation }) {
                 open={monthOpen}
                 value={month}
                 items={monthItems}
-                setOpen={setMonthOpen}
                 setValue={setMonth}
                 setItems={setMonthItems}
                 placeholder="เลือกเดือน"
