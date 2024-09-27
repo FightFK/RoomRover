@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, TextInput } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from '../../context/authContext';
 import { auth, db } from "../../config/firebase-config";
-import { doc, getDoc } from 'firebase/firestore';  
+import { doc, getDoc, setDoc } from 'firebase/firestore';  // เพิ่ม setDoc สำหรับบันทึกข้อมูล
 import styles from './Styles/Home-Style';
 
 function Home({ navigation }) {
@@ -13,12 +13,19 @@ function Home({ navigation }) {
   const [displayName, setDisplayName] = useState('User'); // Default display name
   const [roomNums, setRoomNums] = useState(''); // Default Room Numbers
   const [userRole, setUserRole] = useState(''); // State to store user role
+  const [modalVisible, setModalVisible] = useState(false); // State for Visible Modal For Edit Announcement
+  const [announcement, setAnnouncement] = useState("ไม่มีประกาศ");
 
   const handleLogout = async () => {
-    await authContext.logout();
-    navigation.navigate('Login'); // Navigate to Login screen after logout
+    try {
+      await authContext.logout();  // เรียกใช้งานฟังก์ชัน logout
+      navigation.navigate('Login'); // นำทางกลับไปยังหน้า Login
+    } catch (error) {
+      console.error('Logout error: ', error);  // แสดงข้อผิดพลาดถ้าเกิดขึ้น
+    }
   };
 
+  // Fetch User and Announcement Data
   useEffect(() => {
     const fetchUserData = async () => {
       if (authContext.currentUser) {
@@ -33,8 +40,31 @@ function Home({ navigation }) {
       }
     };
 
+    const fetchAnnouncement = async () => {
+      const announcementDoc = await getDoc(doc(db, 'announcement', 'latest'));
+    
+      if (announcementDoc.exists()) {
+        setAnnouncement(announcementDoc.data().text); // Fetch announcement from Firestore
+      }
+    };
+
     fetchUserData();
-  }, [authContext.currentUser]); // Fetch data when currentUser changes
+    fetchAnnouncement();  // Fetch the latest announcement
+  }, [authContext.currentUser]);
+
+  // Save Announcement to Firestore
+  const handleSaveAnnouncement = async () => {
+    try {
+      await setDoc(doc(db, 'announcement', 'latest'), {
+        text: announcement
+      });
+      console.log("Announcement saved:", announcement);
+    } catch (error) {
+      console.error("Error saving announcement:", error);
+    }
+    console.log("Announcement saved:", announcement);
+    setModalVisible(false); // Close modal after saving
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +73,7 @@ function Home({ navigation }) {
         <View style={styles.greetingContainer}>
           <Text style={styles.greeting}>Hello, </Text>
           <Text style={styles.displayName}>{displayName}</Text>
-          <Text style={styles.roomNumber}>  ห้อง: {roomNums}</Text>
+          <Text style={styles.roomNumber}> ห้อง: {roomNums}</Text>
         </View>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <MaterialIcons name="logout" size={20} color="white" />
@@ -60,10 +90,53 @@ function Home({ navigation }) {
           <View style={styles.headerContainer}>
             <FontAwesome name="bell" size={24} color="#FFA500" />
             <Text style={styles.cardTitle}>ข่าวสารวันนี้</Text>
+            
+            {userRole === 'admin' && (
+              <TouchableOpacity 
+                style={styles.editButton} 
+                onPress={() => setModalVisible(true)} // Open modal on button press
+              >
+                <AntDesign name="edit" size={24} color="black" />
+              </TouchableOpacity>
+            )}
           </View>
-          <Text style={styles.cardDescription}>Test</Text>
+          <Text style={styles.cardDescription}>{announcement}</Text>
         </View>
       </View>
+
+      {/* Modal for Editing Announcement */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>แก้ไขประกาศ</Text>
+          <TextInput
+            style={styles.modalInput}
+            value={announcement}
+            onChangeText={setAnnouncement}
+            placeholder="พิมพ์ประกาศใหม่ที่นี่..."
+          />
+          <View style={styles.modalButtons}>
+            <TouchableOpacity
+              style={[styles.buttons, styles.buttonClose]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.textStyle}>ยกเลิก</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.buttons, styles.buttonSave]}
+              onPress={handleSaveAnnouncement} // Save announcement
+            >
+              <Text style={styles.textStyle}>บันทึก</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Buttons Container (Vertical Layout) */}
       <View style={styles.buttonContainer}>

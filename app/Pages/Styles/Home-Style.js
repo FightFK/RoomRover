@@ -106,6 +106,60 @@ cardDescription: {
     color: '#555', // Softer color for description
     lineHeight: 22, // Increase line height for better spacing
 },
+editButton:{
+  
+},
+modalView: {
+  margin: 20,
+  backgroundColor: "white",
+  borderRadius: 20,
+  padding: 35,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 2
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5
+},
+modalText: {
+  marginBottom: 15,
+  textAlign: "center",
+  fontSize: 18,
+  fontWeight: 'bold'
+},
+modalInput: {
+  width: '100%',
+  height: 40,
+  borderColor: 'gray',
+  borderWidth: 1,
+  borderRadius: 10,
+  paddingHorizontal: 10,
+  marginBottom: 20
+},
+modalButtons: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  width: '100%',
+},
+buttons: {
+  borderRadius: 20,
+  padding: 10,
+  elevation: 2
+},
+buttonClose: {
+  backgroundColor: "#f44336",
+},
+buttonSave: {
+  backgroundColor: "#4CAF50",
+},
+textStyle: {
+  color: "white",
+  fontWeight: "bold",
+  textAlign: "center"
+},
 });
 
 export default styles;
