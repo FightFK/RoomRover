@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image, View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import stylesz from './Styles/register-style';
@@ -7,6 +7,8 @@ import { useAuth } from '../../context/authContext';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import CustomAlert from './components/CustomAlert'; // Adjust the import path as necessary
+import { db } from '../../config/firebase-config'; // Adjust path as necessary
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Signup({ navigation }) {
     const auth = useAuth();
@@ -14,16 +16,42 @@ export default function Signup({ navigation }) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [displayName, setDisplayName] = useState('');
-    const [roomNums, setroomNums] = useState('');
+    const [roomNums, setRoomNums] = useState('');
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
+    const [isSignupEnabled, setIsSignupEnabled] = useState(false); // State to track signup status
+    const [error, setError] = useState('');
+
 
     const isValidEmail = (email) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailPattern.test(email);
     };
 
+    // Status For Open or Close Sign Up System
+    useEffect(() => {
+        const fetchSignupStatus = async () => {
+            const statusDocRef = doc(db, 'status', 'statusregister'); // Adjust the path as necessary
+            const statusDoc = await getDoc(statusDocRef);
+            
+            if (statusDoc.exists()) {
+                setIsSignupEnabled(statusDoc.data().status); // Get the status
+                console.log('Register is Open ?', statusDoc.data().status);
+            } else {
+                console.log('No such document!');
+            }
+        };
+
+        fetchSignupStatus();
+    }, []);
+
     const handleSignup = async () => {
+        if (isSignupEnabled) {
+            setAlertMessage("กรุณาติดต่อเจ้าของหอเพื่อเปิดระบบสมัครสมาชิก");
+            setAlertVisible(true);
+            return;
+        }
+
         if (!email || !password || !confirmPassword || !displayName) {
             setAlertMessage("กรุณากรอกข้อมูลให้ครบถ้วน");
             setAlertVisible(true);
@@ -47,15 +75,16 @@ export default function Signup({ navigation }) {
             setAlertVisible(true);
             return;
         }
-
+        setError('');
         try {
             await auth.signUpWithEmail(email, password, roomNums, displayName, 'user');
-            navigation.navigate('Home');
-        } catch (error) {
-            setAlertMessage(error.message);
-            setAlertVisible(true);
+
+            navigation.navigate('Signup');
+        } catch (e) {
+            setError('Email ของคุณมีคนใช้งานอยู่แล้ว')
         }
     };
+ 
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -89,7 +118,7 @@ export default function Signup({ navigation }) {
                         style={styles.input}
                         placeholder="Room Number"
                         value={roomNums}
-                        onChangeText={setroomNums}
+                        onChangeText={setRoomNums}
                     />
 
                     {/* Email Field */}
@@ -133,9 +162,9 @@ export default function Signup({ navigation }) {
                         <Text style={styles.buttonText}>Sign Up</Text>
                     </TouchableOpacity>
                     <View style={styles.signupContainer}>
-                        <Text style={styles.signupText}>Don't Have Any Account?</Text>
+                        <Text style={styles.signupText}>Did you already have an account? Click </Text>                        
                         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                            <Text style={styles.signupLink}> Login </Text>
+                            <Text style={styles.signupLink}> Here </Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

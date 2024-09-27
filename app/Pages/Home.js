@@ -162,7 +162,7 @@ function Home({ navigation }) {
               <FontAwesome name="plus" size={32} color="black" />
               <Text style={styles.buttonText}>เพิ่มบิลล์</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AddUser')} >
               <FontAwesome name="user-plus" size={32} color="black" />
               <Text style={styles.buttonText}>เพิ่มผู้ใช้</Text>
             </TouchableOpacity>

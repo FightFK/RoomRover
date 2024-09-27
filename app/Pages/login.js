@@ -14,6 +14,7 @@ export default function Login({ navigation }) {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
+
   const handleLogin = async () => {
     if (!email || !password) {
       setAlertMessage("กรุณากรอกอีเมลและรหัสผ่าน");
@@ -70,6 +71,8 @@ export default function Login({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        
+      
         <View style={styles.signupContainer}>
           <Text style={styles.signupText}>Don't Have Any Account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>

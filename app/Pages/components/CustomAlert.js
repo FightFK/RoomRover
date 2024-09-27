@@ -1,9 +1,9 @@
-// CustomAlert.js
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const CustomAlert = ({ visible, onDismiss, message }) => {
+
     return (
         <Modal
             transparent={true}

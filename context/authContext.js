@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
-    
     const signUpWithEmail = async (email, password,roomNums,displayName, role = 'user') => {
         try {
             // สมัครผู้ใช้ใหม่
@@ -66,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     
         } catch (error) {
           // ส่งข้อผิดพลาดกลับไปยังที่เรียก
-          throw new Error("รหัสผ่านผิด");
+          throw new Error("อีเมลล์หรือรหัสผ่านผิด");
         }
       };
       

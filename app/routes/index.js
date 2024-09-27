@@ -5,6 +5,7 @@ import Getstart from '../Pages/Getstart'
 import Login from '../Pages/login';
 import Register from '../Pages/register';
 import Home from '../Pages/Home';
+import AddUser from '../Pages/AddUser';
 import Bill from '../Pages/Bills/Bill';
 import Billinfo from '../Pages/Bills/Billinfo';
 import News from '../Pages/News';
@@ -122,6 +123,16 @@ const Routes = () => {
                 },
                 headerTintColor: '#fff',
             }}/>
+
+            <Stack.Screen name="AddUser" component={AddUser} options={{
+                headerTitle: 'RoomRover',
+                headerBackTitle: 'กลับ',
+                headerStyle: {
+                    backgroundColor: '#29B6F6'
+                },
+                headerTintColor: '#fff',
+            }}/>
+
             </Stack.Navigator>
         </NavigationContainer>
     )
