@@ -1,6 +1,7 @@
 # RoomRover
 
-This is a React Native project built using Expo. Follow the instructions below to set up and run the project.
+This is a React Native project built using Expo For Education Purpose.
+
 
 ## Prerequisites
 
@@ -13,6 +14,10 @@ This is a React Native project built using Expo. Follow the instructions below t
  ```bash
   git clone https://github.com/FightFK/RoomRover.git
   ```
+ ```bash
+cd RoomRover
+  ```
+
 **ติดตั้ง Dependencies**
  ```bash
   npm install
