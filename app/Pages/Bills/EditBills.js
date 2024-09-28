@@ -164,15 +164,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     button: {
-        position: 'absolute',
-        bottom: 50,
-        right: 20,
         padding: 10,
         backgroundColor: '#2B4BF2',
         borderRadius: 5,
         marginTop: 20,
         alignItems: 'center',
     },
+
     buttontext: {
         fontSize: 20,
         color: '#fff',

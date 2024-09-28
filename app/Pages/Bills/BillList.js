@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
 import { db } from '../../../config/firebase-config';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 
@@ -9,42 +10,46 @@ export default function BillList({ route, navigation }) {
     const [displayName, setDisplayName] = useState(''); // State to store displayName
     const [roomNums, setRoomNums] = useState(''); // State to store room number
 
-    useEffect(() => {
-        const fetchBillsAndDisplayName = async () => {
-            try {
-                // Fetch user's displayName
-                const userRef = doc(db, 'users', userId);
-                const userDoc = await getDoc(userRef);
-                if (userDoc.exists()) {
-                    setDisplayName(userDoc.data().displayName);
-                    setRoomNums(userDoc.data().roomNums);
-                } else {
-                    console.log("No such user document!");
-                }
-
-                // Fetch bills
-                const userBillsRef = collection(db, 'bills', userId, 'userBills');
-                const querySnapshot = await getDocs(userBillsRef);
-                const billsData = [];
-                
-                querySnapshot.forEach((doc) => {
-                    billsData.push({ id: doc.id, ...doc.data() }); // Add bill id and data to array
-                });
-
-                setBills(billsData); // Set the bills state
-            } catch (error) {
-                console.error("Error fetching bills or display name: ", error);
+    // Fetch bills and displayName
+    const fetchBillsAndDisplayName = async () => {
+        try {
+            // Fetch user's displayName
+            const userRef = doc(db, 'users', userId);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+                setDisplayName(userDoc.data().displayName);
+                setRoomNums(userDoc.data().roomNums);
+            } else {
+                console.log("No such user document!");
             }
-        };
 
-        fetchBillsAndDisplayName();
-    }, [userId]);
+            // Fetch bills
+            const userBillsRef = collection(db, 'bills', userId, 'userBills');
+            const querySnapshot = await getDocs(userBillsRef);
+            const billsData = [];
+            
+            querySnapshot.forEach((doc) => {
+                billsData.push({ id: doc.id, ...doc.data() }); // Add bill id and data to array
+            });
 
-    // ส่ง uid และ billid
+            setBills(billsData); // Set the bills state
+        } catch (error) {
+            console.error("Error fetching bills or display name: ", error);
+        }
+    };
+
+    // Use useFocusEffect to refetch data when the screen is focused
+    useFocusEffect(
+        useCallback(() => {
+            fetchBillsAndDisplayName();
+        }, [userId])
+    );
+
+    // Send uid and billId to the EditBills screen
     const renderBillItem = ({ item }) => (
         <TouchableOpacity 
             style={styles.billItem}
-            onPress={() => navigation.navigate('EditBills', { billData: item, userId: userId })} // ส่ง userId และ billData
+            onPress={() => navigation.navigate('EditBills', { billData: item, userId: userId })} // Send userId and billData
         >
             <Text style={styles.billText}>หมายเลขบิล: {item.id}</Text>
             <Text style={styles.billText}>เดือน: {item.month}</Text>
@@ -54,9 +59,6 @@ export default function BillList({ route, navigation }) {
             <Text style={styles.billText}>สถานะการชำระ: {item.status}</Text>
         </TouchableOpacity>
     );
-    
-    
-
 
     return (
         <View style={styles.container}>
@@ -66,14 +68,14 @@ export default function BillList({ route, navigation }) {
                 data={bills}
                 renderItem={renderBillItem}
                 keyExtractor={(item) => item.id}
-                showsVerticalScrollIndicator={false} // Hide scroll indicator
-                contentContainerStyle={styles.flatListContent} // Add some padding at the top
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.flatListContent}
             />
         </View>
     );
 }
 
-// styles...
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

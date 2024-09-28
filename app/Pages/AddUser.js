@@ -38,6 +38,7 @@ export default function AddUser() {
 
   return (
     <View style={styles.container}>
+  
       <Text style={styles.label}>Enable Signup:</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}

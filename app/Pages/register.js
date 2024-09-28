@@ -46,7 +46,7 @@ export default function Signup({ navigation }) {
     }, []);
 
     const handleSignup = async () => {
-        if (isSignupEnabled) {
+        if (!isSignupEnabled) {
             setAlertMessage("กรุณาติดต่อเจ้าของหอเพื่อเปิดระบบสมัครสมาชิก");
             setAlertVisible(true);
             return;
@@ -79,7 +79,7 @@ export default function Signup({ navigation }) {
         try {
             await auth.signUpWithEmail(email, password, roomNums, displayName, 'user');
 
-            navigation.navigate('Signup');
+            navigation.navigate('Login');
         } catch (e) {
             setError('Email ของคุณมีคนใช้งานอยู่แล้ว')
         }

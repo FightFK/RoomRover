@@ -18,7 +18,13 @@ export default function UserList({ navigation }) {
                     id: doc.id,
                     ...doc.data(),
                 }));
-                setUsers(usersData);
+
+                // Sort users based on roomNums
+                const sortedUsers = usersData.sort((a, b) => {
+                    return a.roomNums - b.roomNums; // Assuming roomNums is a number
+                });
+
+                setUsers(sortedUsers); // Set sorted users
             } catch (error) {
                 console.error('Error fetching users: ', error);
             }
@@ -102,9 +108,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 10,
         elevation: 5,
-        shadowColor: '#000', // Adding shadow for iOS
-        shadowOpacity: 0.1, // Adding shadow for iOS
-        shadowRadius: 5, // Adding shadow for iOS
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
     },
     cardText: {
         fontSize: 18,
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor: '#2B4BF2',
         borderRadius: 5,
-        marginVertical: 10, // Spacing between buttons
+        marginVertical: 10,
         alignItems: 'center',
     },
     modalButtonText: {
