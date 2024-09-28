@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet,ActivityIndicator  } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore'; 
 import { useAuth } from '../../../context/authContext'; // Assuming you have auth context
 import { db } from '../../../config/firebase-config';
-import loading_styles from '../Styles/Loading-Style';
+import Loading from '../components/Loading';
+
 export default function ReportList({ navigation, route }) {
   const { currentUser } = useAuth(); // Get the current user from the auth context
   const [reports, setReports] = useState([]);
@@ -23,9 +24,9 @@ export default function ReportList({ navigation, route }) {
           setReports(reportsData);
         } catch (error) {
           console.error('Error fetching reports: ', error);
-        }finally {
+        } finally {
           setLoading(false); // เปลี่ยนเป็น false หลังจากดึงข้อมูลเสร็จ
-      }
+        }
       }
     };
 
@@ -58,14 +59,13 @@ export default function ReportList({ navigation, route }) {
   const handleReportPress = () => {
     navigation.navigate('ReportAdd'); // Navigate to report creation screen
   };
+
   if (loading) {
     return (
-        <View style={loading_styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#0000ff" />
-            <Text style={loading_styles.loadingText}>Loading Report...</Text>
-        </View>
+     <Loading />
     );
-}
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>รายงานปัญหาของคุณ</Text>

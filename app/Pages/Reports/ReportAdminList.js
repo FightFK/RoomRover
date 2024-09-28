@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { db } from '../../../config/firebase-config'; // ใช้ Firebase Firestore
 import { collectionGroup, getDocs, doc, getDoc } from "firebase/firestore";
-
+import Loading from '../components/Loading';
 export default function ReportList({ navigation }) {
     const [reports, setReports] = useState([]); // เก็บรายการ report ทั้งหมด
     const [loading, setLoading] = useState(true); // Loading state
@@ -89,7 +89,7 @@ export default function ReportList({ navigation }) {
     };
 
     if (loading) {
-        return <ActivityIndicator size="large" color="#0000ff" />; // แสดงการโหลดถ้ายังดึงข้อมูลไม่เสร็จ
+        return <Loading/>
     }
 
     return (

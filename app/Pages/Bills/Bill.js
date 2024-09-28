@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator }
 import { collection, getDocs, query } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { db } from '../../../config/firebase-config';
-
+import Loading from '../components/Loading';
 export default function Bill({ navigation,route }) {
     const { displayName } = route.params; // Get UID from params
     const [bills, setBills] = useState([]);
@@ -40,10 +40,7 @@ export default function Bill({ navigation,route }) {
     // Render loading state
     if (loading) {
         return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
-                <Text style={styles.loadingText}>Loading bills...</Text>
-            </View>
+           <Loading/>
         );
     }
 

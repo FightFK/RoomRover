@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Modal, ActivityIndicator } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../config/firebase-config';
 import { FontAwesome } from '@expo/vector-icons'; // Importing FontAwesome for the close icon
-
+import Loading from '../components/Loading';
 export default function UserList({ navigation }) {
     const [users, setUsers] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null); // Store selected user ID
+    const [loading, setLoading] = useState(true); // State to manage loading
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -27,6 +28,8 @@ export default function UserList({ navigation }) {
                 setUsers(sortedUsers); // Set sorted users
             } catch (error) {
                 console.error('Error fetching users: ', error);
+            } finally {
+                setLoading(false); // Set loading to false when data is fetched
             }
         };
 
@@ -51,18 +54,23 @@ export default function UserList({ navigation }) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>All Users</Text>
-            <FlatList
-                data={users}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => handleUserPress(item.id)}>
-                        <View style={styles.card}>
-                            <Text style={styles.cardText}>คุณ: {item.displayName} หมายเลขห้องพัก: {item.roomNums}</Text>
-                        </View>
-                    </TouchableOpacity>
-                )}
-                showsVerticalScrollIndicator={false} // Hide scroll indicator for a cleaner look
-            />
+
+            {loading ? ( // Show loading indicator while data is being fetched
+               <Loading />
+            ) : (
+                <FlatList
+                    data={users}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity onPress={() => handleUserPress(item.id)}>
+                            <View style={styles.card}>
+                                <Text style={styles.cardText}>คุณ: {item.displayName} หมายเลขห้องพัก: {item.roomNums}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    showsVerticalScrollIndicator={false} // Hide scroll indicator for a cleaner look
+                />
+            )}
 
             {/* Modal for selecting add/edit */}
             <Modal
@@ -101,6 +109,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center', // Center the header text
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5',
+    },
+    loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        color: '#444',
     },
     card: {
         padding: 20,
