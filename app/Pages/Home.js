@@ -96,7 +96,7 @@ function Home({ navigation }) {
                 style={styles.editButton} 
                 onPress={() => setModalVisible(true)} // Open modal on button press
               >
-                <AntDesign name="edit" size={24} color="black" />
+                <AntDesign name="edit" size={28} color="black" />
               </TouchableOpacity>
             )}
           </View>

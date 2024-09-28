@@ -107,7 +107,7 @@ cardDescription: {
     lineHeight: 22, // Increase line height for better spacing
 },
 editButton:{
-  
+  marginLeft: 180,
 },
 modalView: {
   margin: 20,
