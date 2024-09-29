@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, TextInput, ScrollView, Dimensions } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'; 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from '../../context/authContext';
 import { auth, db } from "../../config/firebase-config";
-import { doc, getDoc, setDoc } from 'firebase/firestore';  // เพิ่ม setDoc สำหรับบันทึกข้อมูล
+import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';  
 import styles from './Styles/Home-Style';
+import { BarChart } from "react-native-chart-kit"; 
 
 function Home({ navigation }) {
   const authContext = useAuth();
-  const [displayName, setDisplayName] = useState('User'); // Default display name
-  const [roomNums, setRoomNums] = useState(''); // Default Room Numbers
-  const [userRole, setUserRole] = useState(''); // State to store user role
-  const [modalVisible, setModalVisible] = useState(false); // State for Visible Modal For Edit Announcement
+  const [displayName, setDisplayName] = useState('User'); 
+  const [roomNums, setRoomNums] = useState(''); 
+  const [userRole, setUserRole] = useState(''); 
+  const [modalVisible, setModalVisible] = useState(false); 
   const [announcement, setAnnouncement] = useState("ไม่มีประกาศ");
+  const [monthlyElectricityUsage, setMonthlyElectricityUsage] = useState([]); // State for electricity usage data
+
+  // Get the last 6 months of data
+  const lastSixMonthsLabels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; // Last 6 month labels
 
   const handleLogout = async () => {
     try {
-      await authContext.logout();  // เรียกใช้งานฟังก์ชัน logout
-      navigation.navigate('Login'); // นำทางกลับไปยังหน้า Login
+      await authContext.logout();  
+      navigation.navigate('Login'); 
     } catch (error) {
-      console.error('Logout error: ', error);  // แสดงข้อผิดพลาดถ้าเกิดขึ้น
+      console.error('Logout error: ', error); 
     }
   };
 
@@ -31,9 +36,9 @@ function Home({ navigation }) {
       if (authContext.currentUser) {
         const userDoc = await getDoc(doc(db, 'users', authContext.currentUser.uid));
         if (userDoc.exists()) {
-          setDisplayName(userDoc.data().displayName); // Fetch displayName from Firestore
+          setDisplayName(userDoc.data().displayName); 
           setRoomNums(userDoc.data().roomNums);
-          setUserRole(userDoc.data().role); // Fetch user role from Firestore
+          setUserRole(userDoc.data().role); 
         } else {
           console.log("No such document!");
         }
@@ -44,12 +49,30 @@ function Home({ navigation }) {
       const announcementDoc = await getDoc(doc(db, 'announcement', 'latest'));
     
       if (announcementDoc.exists()) {
-        setAnnouncement(announcementDoc.data().text); // Fetch announcement from Firestore
+        setAnnouncement(announcementDoc.data().text); 
+      }
+    };
+
+    // Fetch electricity usage data
+    const fetchElectricityUsage = async () => {
+      if (authContext.currentUser) {
+        const billsRef = collection(db, 'bills', authContext.currentUser.uid, 'userBills');
+        const querySnapshot = await getDocs(billsRef);
+        const usageData = [];
+
+        querySnapshot.forEach((doc) => {
+          usageData.push(doc.data().priceElectric); // Assuming `priceElectric` is the field with the electricity usage
+        });
+
+        // Take the last 6 months of usage data
+        const lastSixMonthsUsage = usageData.slice(-6);
+        setMonthlyElectricityUsage(lastSixMonthsUsage);
       }
     };
 
     fetchUserData();
-    fetchAnnouncement();  // Fetch the latest announcement
+    fetchAnnouncement();  
+    fetchElectricityUsage(); // Fetch electricity usage data
   }, [authContext.currentUser]);
 
   // Save Announcement to Firestore
@@ -62,8 +85,7 @@ function Home({ navigation }) {
     } catch (error) {
       console.error("Error saving announcement:", error);
     }
-    console.log("Announcement saved:", announcement);
-    setModalVisible(false); // Close modal after saving
+    setModalVisible(false); 
   };
 
   return (
@@ -94,7 +116,7 @@ function Home({ navigation }) {
             {userRole === 'admin' && (
               <TouchableOpacity 
                 style={styles.editButton} 
-                onPress={() => setModalVisible(true)} // Open modal on button press
+                onPress={() => setModalVisible(true)} 
               >
                 <AntDesign name="edit" size={28} color="black" />
               </TouchableOpacity>
@@ -130,7 +152,7 @@ function Home({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.buttons, styles.buttonSave]}
-              onPress={handleSaveAnnouncement} // Save announcement
+              onPress={handleSaveAnnouncement}
             >
               <Text style={styles.textStyle}>บันทึก</Text>
             </TouchableOpacity>
@@ -138,29 +160,57 @@ function Home({ navigation }) {
         </View>
       </Modal>
 
-      {/* Buttons Container (Vertical Layout) */}
-      <View style={styles.buttonContainer}>
+      {/* Scrollable Buttons Container */}
+      <ScrollView contentContainerStyle={styles.buttonContainer}>
         {userRole === 'user' ? (
           <>
-            <Text style={styles.title}>My Room</Text>
-            <TouchableOpacity 
-              style={styles.button} 
-              onPress={() => navigation.navigate('Bill', { displayName })} // Pass Parameter
-            >
-              <FontAwesome name="file-text" size={32} color="black" />
-              <Text style={styles.buttonText}>Bill Payment</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReportList')}>
-              <MaterialIcons name="report" size={32} color="black" />
-              <Text style={styles.buttonText}>Report</Text>
-            </TouchableOpacity>
+            {/* Center the Bar Chart */}
+            <View style={styles.chartContainer}>
+              <Text>ค่าไฟฟ้าย้อนหลัง 6 เดือน</Text>
+              <BarChart
+                data={{
+                  labels: lastSixMonthsLabels, // Last 6 month labels
+                  datasets: [
+                    {
+                      data: monthlyElectricityUsage.length > 0 ? monthlyElectricityUsage : [0, 0, 0, 0, 0, 0], // Fallback to zeros if no data
+                      color: (opacity = 1) => `rgba(70, 130, 180, ${opacity})`, // ใช้สีฟ้าเข้ม
+                      strokeWidth: 2, // optional
+                    },
+                  ],
+                }}
+                width={Dimensions.get("window").width - 16} // Adjust the width a bit wider
+                height={220}
+                chartConfig={{
+                  backgroundColor: "#ffffff", // เปลี่ยนพื้นหลังให้ขาว
+                  backgroundGradientFrom: "#ffffff", // พื้นหลังขาว
+                  backgroundGradientTo: "#f0f0f0", // พื้นหลังอ่อน
+                  decimalPlaces: 2, // optional
+                  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // สีตัวอักษรเป็นสีดำ
+                  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                  style: {
+                    borderRadius: 16,
+                    paddingLeft: 20, // เพิ่ม padding ด้านซ้าย
+                  },
+                  propsForDots: {
+                    r: "6",
+                    strokeWidth: "2",
+                    stroke: "#4682b4", // ใช้สีฟ้าเข้มสำหรับจุด
+                  },
+                }}
+                style={{
+                  marginVertical: 8,
+                  borderRadius: 16,
+                  marginLeft: -8, // เพิ่ม marginLeft ให้ลดชิดด้านขวาลง
+                }}
+              />
+            </View>
           </>
         ) : userRole === 'admin' ? (
           <>
             <Text style={styles.title}>Admin Console</Text>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('UserList')}>
               <FontAwesome name="plus" size={32} color="black" />
-              <Text style={styles.buttonText}>เพิ่มบิลล์</Text>
+              <Text style={styles.buttonText}>จัดการบิลล์</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AddUser')} >
               <FontAwesome name="user-plus" size={32} color="black" />
@@ -168,11 +218,11 @@ function Home({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReportAdminList')}>
               <AntDesign name="exclamationcircle" size={32} color="black" />
-              <Text style={styles.buttonText}>รายงานปัญหา</Text>
+              <Text style={styles.buttonText}>ดูรายงานปัญหา</Text>
             </TouchableOpacity>
           </>
         ) : null}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   buttonContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: 20,
-    paddingHorizontal: 16,
+    flexGrow: 1,
+    justifyContent: 'flex-start', // Adjust this based on your layout preference
+    paddingBottom: 20, // Optional: add some padding at the bottom
   },
+  
   button: {
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -152,6 +152,10 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  chartContainer: {
+    alignItems: 'center', // Center the chart
+    justifyContent: 'center',
   },
 });
 

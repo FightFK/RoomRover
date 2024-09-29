@@ -1,19 +1,19 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { db } from '../../../config/firebase-config';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, deleteDoc } from 'firebase/firestore';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import Ionicons
 
 export default function BillList({ route, navigation }) {
-    const { userId } = route.params; // Get UID from params
-    const [bills, setBills] = useState([]); // State to store bills
-    const [displayName, setDisplayName] = useState(''); // State to store displayName
-    const [roomNums, setRoomNums] = useState(''); // State to store room number
+    const { userId } = route.params;
+    const [bills, setBills] = useState([]);
+    const [displayName, setDisplayName] = useState('');
+    const [roomNums, setRoomNums] = useState('');
 
     // Fetch bills and displayName
     const fetchBillsAndDisplayName = async () => {
         try {
-            // Fetch user's displayName
             const userRef = doc(db, 'users', userId);
             const userDoc = await getDoc(userRef);
             if (userDoc.exists()) {
@@ -23,18 +23,30 @@ export default function BillList({ route, navigation }) {
                 console.log("No such user document!");
             }
 
-            // Fetch bills
             const userBillsRef = collection(db, 'bills', userId, 'userBills');
             const querySnapshot = await getDocs(userBillsRef);
             const billsData = [];
             
             querySnapshot.forEach((doc) => {
-                billsData.push({ id: doc.id, ...doc.data() }); // Add bill id and data to array
+                billsData.push({ id: doc.id, ...doc.data() });
             });
 
-            setBills(billsData); // Set the bills state
+            setBills(billsData);
         } catch (error) {
             console.error("Error fetching bills or display name: ", error);
+        }
+    };
+
+    // Function to delete a bill
+    const handleDeleteBill = async (billId) => {
+        try {
+            const billRef = doc(db, 'bills', userId, 'userBills', billId);
+            await deleteDoc(billRef);
+            Alert.alert('Success', 'บิลถูกลบเรียบร้อยแล้ว');
+            fetchBillsAndDisplayName(); // Refresh the bill list after deletion
+        } catch (error) {
+            console.error("Error deleting bill: ", error);
+            Alert.alert('Error', 'ไม่สามารถลบบิลได้');
         }
     };
 
@@ -47,17 +59,33 @@ export default function BillList({ route, navigation }) {
 
     // Send uid and billId to the EditBills screen
     const renderBillItem = ({ item }) => (
-        <TouchableOpacity 
-            style={styles.billItem}
-            onPress={() => navigation.navigate('EditBills', { billData: item, userId: userId })} // Send userId and billData
-        >
-            <Text style={styles.billText}>หมายเลขบิล: {item.id}</Text>
-            <Text style={styles.billText}>เดือน: {item.month}</Text>
-            <Text style={styles.billText}>ค่าห้องพัก: {item.priceRoom}</Text>
-            <Text style={styles.billText}>ค่าไฟฟ้า: {item.priceElectric}</Text>
-            <Text style={styles.billText}>ค่าน้ำ: {item.priceWater}</Text>
-            <Text style={styles.billText}>สถานะการชำระ: {item.status}</Text>
-        </TouchableOpacity>
+        <View style={styles.billItem}>
+            <TouchableOpacity 
+                onPress={() => navigation.navigate('EditBills', { billData: item, userId: userId })}
+            >
+                <Text style={styles.billText}>หมายเลขบิล: {item.id}</Text>
+                <Text style={styles.billText}>เดือน: {item.month}</Text>
+                <Text style={styles.billText}>ค่าห้องพัก: {item.priceRoom}</Text>
+                <Text style={styles.billText}>ค่าไฟฟ้า: {item.priceElectric}</Text>
+                <Text style={styles.billText}>ค่าน้ำ: {item.priceWater}</Text>
+                <Text style={styles.billText}>สถานะการชำระ: {item.status}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.deleteButton} 
+                onPress={() => {
+                    Alert.alert(
+                        'Confirm Delete',
+                        'Are you sure you want to delete this bill?',
+                        [
+                            { text: 'Cancel', style: 'cancel' },
+                            { text: 'OK', onPress: () => handleDeleteBill(item.id) },
+                        ]
+                    );
+                }}
+            >
+                <Icon name="trash-outline" size={24} color="#FF4D4D" />
+            </TouchableOpacity>
+        </View>
     );
 
     return (
@@ -71,10 +99,17 @@ export default function BillList({ route, navigation }) {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.flatListContent}
             />
+            
+            {/* Add Bill Button */}
+            <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => navigation.navigate('BillAdd', { userId: userId })}
+            >
+                <Icon name="add-circle" size={60} color="#2B4BF2" />
+            </TouchableOpacity>
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -96,7 +131,7 @@ const styles = StyleSheet.create({
         color: '#666',
     },
     flatListContent: {
-        paddingBottom: 20, // Add padding to the bottom of the FlatList
+        paddingBottom: 20,
     },
     billItem: {
         padding: 15,
@@ -107,10 +142,23 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 3,
+        position: 'relative',
     },
     billText: {
         fontSize: 16,
         marginBottom: 5,
         color: '#444',
+    },
+    deleteButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        padding: 5,
+    },
+    addButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        elevation: 5, // Adds elevation for shadow effect
     },
 });
