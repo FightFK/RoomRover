@@ -115,6 +115,7 @@ export default function EditBills({ route, navigation }) {
                 open={monthOpen}
                 value={month}
                 items={monthItems}
+                setOpen={setMonthOpen} // Set the open state correctly
                 setValue={setMonth}
                 setItems={setMonthItems}
                 placeholder="เลือกเดือน"
@@ -142,7 +143,7 @@ export default function EditBills({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#E8F0FE',
         padding: 20,
     },
     Header: {

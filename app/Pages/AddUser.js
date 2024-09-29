@@ -45,24 +45,31 @@ export default function AddUser() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Enable Signup:</Text>
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-      />
-    </View>
+    <View style= {styles.Bigcontainer}> 
+      <View style={styles.container}>
+    <Text style={styles.label}>Enable Signup:</Text>
+    <Switch
+      trackColor={{ false: "#767577", true: "#81b0ff" }}
+      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+      onValueChange={toggleSwitch}
+      value={isEnabled}
+    />
+  </View>
+  </View>
+   
   );
 }
 
 const styles = StyleSheet.create({
+  Bigcontainer:{
+    backgroundColor:'#F5F5F5'
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
+    backgroundColor:'#FFF',
   },
   label: {
     fontSize: 16,

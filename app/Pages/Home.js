@@ -164,7 +164,7 @@ function Home({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AddUser')} >
               <FontAwesome name="user-plus" size={32} color="black" />
-              <Text style={styles.buttonText}>เพิ่มผู้ใช้</Text>
+              <Text style={styles.buttonText}>จัดการผู้ใช้</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReportAdminList')}>
               <AntDesign name="exclamationcircle" size={32} color="black" />

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#E8F0FE',
         borderRadius: 10,
         overflow: 'hidden',
         margin: 10,

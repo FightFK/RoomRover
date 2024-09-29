@@ -18,14 +18,15 @@ export default function News() {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#E8F0FE',
         borderRadius: 10,
         overflow: 'hidden',
-        margin: 10,
+        margin: 5,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 5 },
+        marginBottom:-20,
         elevation: 5, // Adds shadow for Android
     },
     cardContent: {

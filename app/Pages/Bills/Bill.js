@@ -86,7 +86,7 @@ export default function Bill({ navigation,route }) {
         container: {
             flex: 1,
             padding: 15,
-            backgroundColor: '#f0f0f0', // Light background for better contrast
+            backgroundColor: '#E8F0FE', // Light background for better contrast
         },
         header: {
             marginBottom: 15,

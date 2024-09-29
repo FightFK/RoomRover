@@ -1,4 +1,3 @@
-// Styles/Home-Screen.js
 import { StyleSheet, Dimensions } from "react-native";
 
 const { width } = Dimensions.get('window');
@@ -6,72 +5,75 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#E8F0FE', // Light blue background
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: '#3F8CFF', // Header background color
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // จัดตำแหน่งให้ปุ่มล็อกเอาต์อยู่ทางขวา
-  },  
+    justifyContent: 'space-between',
+  },
   greetingContainer: {
-    flexDirection: 'row', // จัดเรียงข้อความในแนวนอน
-    alignItems: 'center', // จัดให้อยู่ตรงกลางในแนวดิ่ง
-  },  
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   greeting: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginRight:10,
+    color: 'white',
   },
-  email: {
+  displayName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    marginLeft: 5,
+  },
+  roomNumber: {
     fontSize: 16,
-    color: 'gray',
+    color: 'white',
+    marginLeft: 5,
   },
   logoutButton: {
     padding: 8,
-    backgroundColor: '#ff4757', // Change to your preferred color
+    backgroundColor: '#ff4757',
     borderRadius: 5,
-      flexDirection: 'row'
+    flexDirection: 'row',
   },
   logoutText: {
     color: 'white',
     fontWeight: 'bold',
-    
   },
   banner: {
     width: '100%',
-    height: 200, // Adjust based on your image
+    height: 200,
     resizeMode: 'cover',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop:-20,
-    marginVertical: 10,
+    marginVertical:0,
+    color: '#333',
   },
   buttonContainer: {
-    flexDirection: 'column', // Change to column for vertical layout
-    alignItems: 'center', // Center the buttons horizontally
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: 20,
-    paddingHorizontal: 16, // Optional: Add padding for aesthetics
+    paddingHorizontal: 16,
   },
   button: {
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 16,
     borderRadius: 10,
-    width: '100%', 
-    marginTop:15,
-    // Shadow for iOS
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-
-  // Shadow for Android
-  elevation: 5,
+    width: '100%',
+    marginTop: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
     marginTop: 8,
@@ -85,81 +87,72 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
-    elevation: 5, // Adds shadow for Android
-},
-cardContent: {
+    elevation: 5,
+  },
+  cardContent: {
     padding: 15,
-},
-headerContainer: {
+  },
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 5,
-},
-cardTitle: {
+  },
+  cardTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: '#333', // Darker color for better readability
-},
-cardDescription: {
-    fontSize: 16,
-    color: '#555', // Softer color for description
-    lineHeight: 22, // Increase line height for better spacing
-},
-editButton:{
-  marginLeft: 180,
-},
-modalView: {
-  margin: 20,
-  backgroundColor: "white",
-  borderRadius: 20,
-  padding: 35,
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 2
   },
-  shadowOpacity: 0.25,
-  shadowRadius: 4,
-  elevation: 5
-},
-modalText: {
-  marginBottom: 15,
-  textAlign: "center",
-  fontSize: 18,
-  fontWeight: 'bold'
-},
-modalInput: {
-  width: '100%',
-  height: 40,
-  borderColor: 'gray',
-  borderWidth: 1,
-  borderRadius: 10,
-  paddingHorizontal: 10,
-  marginBottom: 20
-},
-modalButtons: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  width: '100%',
-},
-buttons: {
-  borderRadius: 20,
-  padding: 10,
-  elevation: 2
-},
-buttonClose: {
-  backgroundColor: "#f44336",
-},
-buttonSave: {
-  backgroundColor: "#4CAF50",
-},
-textStyle: {
-  color: "white",
-  fontWeight: "bold",
-  textAlign: "center"
-},
+  cardDescription: {
+    fontSize: 16,
+    color: '#555',
+  },
+  editButton: {
+    marginLeft: 'auto',
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 20,
+    elevation: 5,
+    shadowColor: '#000',
+  },
+  modalText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  modalInput: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  buttons: {
+    borderRadius: 5,
+    padding: 10,
+    width: '48%',
+    alignItems: 'center',
+  },
+  buttonClose: {
+    backgroundColor: '#ff4757',
+  },
+  buttonSave: {
+    backgroundColor: '#3F8CFF',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;
