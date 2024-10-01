@@ -43,11 +43,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textapp: {
-        color: 'white',
+        color: '#fff',
         fontSize: 48,
         fontWeight: 'bold',
         textAlign: 'center',
         fontStyle: 'italic',
+
     },
     textabout: {
         color: 'white',

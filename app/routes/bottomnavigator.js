@@ -16,7 +16,7 @@ export default function BottomNavigator() {
           let iconComponent;
 
           if (route.name === 'HomeTab') {
-            iconComponent = <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={focused ? '#007AFF' : '#8e8e93'} />;
+            iconComponent = <Ionicons name="home" size={size} color="black" />;
           } else if (route.name === 'BillTab') {
             iconComponent = <FontAwesome name="file-text" size={size} color="black" />; // Use FontAwesome for Bill
           } else if (route.name === 'ReportTab') {
@@ -25,7 +25,7 @@ export default function BottomNavigator() {
           
           return iconComponent; // Return the icon component
         },
-        tabBarActiveTintColor: '#007AFF',
+        tabBarActiveTintColor: '#000w2   ',
         tabBarInactiveTintColor: '#8e8e93',
         tabBarLabelStyle: { fontSize: 14 }, // Adjust font size here
         tabBarStyle: { 
@@ -37,7 +37,13 @@ export default function BottomNavigator() {
       <Tab.Screen 
         name="HomeTab" 
         component={Home}  
-        options={{ title: 'หน้าแรก' }} 
+        options={{ 
+          title: 'หน้าแรก' ,
+          headerStyle: {
+            backgroundColor: '#29B6F6'
+          },
+          headerTintColor: '#fff',
+        }} 
       />
       <Tab.Screen 
         name="BillTab" 
@@ -62,7 +68,8 @@ export default function BottomNavigator() {
           headerTitle: 'RoomRover',
           headerBackTitle: 'กลับ',
           headerStyle: {
-            backgroundColor: '#29B6F6'
+            backgroundColor: '#29B6F6',
+            
           },
           headerTintColor: '#fff',
         }} 

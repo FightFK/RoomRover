@@ -91,17 +91,17 @@ function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Section */}
-      <View style={styles.header}>
-        <View style={styles.greetingContainer}>
-          <Text style={styles.greeting}>Hello, </Text>
-          <Text style={styles.displayName}>{displayName}</Text>
-          <Text style={styles.roomNumber}> ห้อง: {roomNums}</Text>
+        <View style={styles.header}>
+          <View style={styles.greetingContainer}>
+            <Text style={styles.greeting}>Hello, </Text>
+            <Text style={styles.displayName}>{displayName}</Text>
+            <Text style={styles.roomNumber}> ห้อง: {roomNums}</Text>
+          </View>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <MaterialIcons name="logout" size={20} color="white" />
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <MaterialIcons name="logout" size={20} color="white" />
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
 
       {/* Top Banner */}
       <Image source={require('../../assets/Room.png')} style={styles.banner} />

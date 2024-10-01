@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8F0FE', // Light blue background
   },
   header: {
-    backgroundColor: '#3F8CFF', // Header background color
+    backgroundColor: '#000', // Header background color
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -59,16 +59,17 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexGrow: 1,
     justifyContent: 'flex-start', // Adjust this based on your layout preference
-    paddingBottom: 20, // Optional: add some padding at the bottom
+    paddingBottom: 60, // Optional: add some padding at the bottom
   },
   
   button: {
+    marginHorizontal: 'auto',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 16,
+    padding: 14,
     borderRadius: 10,
-    width: '100%',
-    marginTop: 15,
+    width: '95%',
+    marginTop: 11,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
-    margin: 10,
+    margin: 12,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 10,

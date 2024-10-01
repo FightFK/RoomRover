@@ -32,8 +32,7 @@ const Routes = () => {
                 <Stack.Screen name="Home" component={BottomNavigator} options={{ headerShown: false }}/>
 
 
-
-                 <Stack.Screen name="Bill" component={Bill} options={{
+                <Stack.Screen name="Bill" component={Bill} options={{
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
