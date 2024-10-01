@@ -23,7 +23,7 @@ function Home({ navigation }) {
 
   const handleLogout = async () => {
     try {
-      await authContext.logout();  
+      await authContext?.logout();  
       navigation.navigate('Login'); 
     } catch (error) {
       console.error('Logout error: ', error); 
@@ -34,7 +34,7 @@ function Home({ navigation }) {
   useEffect(() => {
     const fetchUserData = async () => {
       if (authContext.currentUser) {
-        const userDoc = await getDoc(doc(db, 'users', authContext.currentUser.uid));
+        const userDoc = await getDoc(doc(db, 'users', authContext?.currentUser?.uid));
         if (userDoc.exists()) {
           setDisplayName(userDoc.data().displayName); 
           setRoomNums(userDoc.data().roomNums);
@@ -55,7 +55,7 @@ function Home({ navigation }) {
 
     // Fetch electricity usage data
     const fetchElectricityUsage = async () => {
-      if (authContext.currentUser) {
+      if (authContext?.currentUser) {
         const billsRef = collection(db, 'bills', authContext.currentUser.uid, 'userBills');
         const querySnapshot = await getDocs(billsRef);
         const usageData = [];
@@ -73,7 +73,7 @@ function Home({ navigation }) {
     fetchUserData();
     fetchAnnouncement();  
     fetchElectricityUsage(); // Fetch electricity usage data
-  }, [authContext.currentUser]);
+  }, [authContext?.currentUser]);
 
   // Save Announcement to Firestore
   const handleSaveAnnouncement = async () => {
@@ -189,7 +189,7 @@ function Home({ navigation }) {
                   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                   style: {
                     borderRadius: 16,
-                    paddingLeft: 20, // เพิ่ม padding ด้านซ้าย
+                    paddingLeft: 30, // เพิ่ม padding ด้านซ้าย
                   },
                   propsForDots: {
                     r: "6",

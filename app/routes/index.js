@@ -84,7 +84,13 @@ const Routes = () => {
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
-                    backgroundColor: '#29B6F6'
+                    backgroundColor: '#29B6F6',
+                    backgroundColor: '#29B6F6',
+                    backgroundColor: '#29B6F6',
+                    shadowColor: '#000',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 4,
+                    shadowOffset: { width: 0, height: 2 },
                 },
                 headerTintColor: '#fff',
             }}/>
@@ -92,7 +98,11 @@ const Routes = () => {
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
-                    backgroundColor: '#29B6F6'
+                    backgroundColor: '#29B6F6',
+                    shadowColor: '#000',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 4,
+                    shadowOffset: { width: 0, height: 2 },
                 },
                 headerTintColor: '#fff',
             }}/>
@@ -108,7 +118,11 @@ const Routes = () => {
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
-                    backgroundColor: '#29B6F6'
+                    backgroundColor: '#29B6F6',
+                    shadowColor: '#000',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 4,
+                    shadowOffset: { width: 0, height: 2 },
                 },
                 headerTintColor: '#fff',
             }}/>
@@ -116,7 +130,11 @@ const Routes = () => {
                 headerTitle: 'RoomRover',
                 headerBackTitle: 'กลับ',
                 headerStyle: {
-                    backgroundColor: '#29B6F6'
+                    backgroundColor: '#29B6F6',
+                    shadowColor: '#000',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 4,
+                    shadowOffset: { width: 0, height: 2 },
                 },
                 headerTintColor: '#fff',
             }}/>

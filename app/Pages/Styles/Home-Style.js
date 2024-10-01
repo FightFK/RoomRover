@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8F0FE', // Light blue background
   },
   header: {
-    backgroundColor: '#000', // Header background color
+    backgroundColor: '#29B6F6', // Header background color
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
   chartContainer: {
     alignItems: 'center', // Center the chart
     justifyContent: 'center',
+    marginLeft: 7
   },
 });
 

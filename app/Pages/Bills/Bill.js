@@ -107,18 +107,16 @@ export default function Bill({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 15,
         backgroundColor: '#E8F0FE',
     },
     header: {
         marginBottom: 15,
         padding: 10,
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
+        backgroundColor: '#fff'
     },
     headerText: {
         fontSize: 20,
-        color: '#fff',
+        color: '#000',
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -127,7 +125,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         marginVertical: 10,
-        padding: 15,
+        marginHorizontal: 10,
+        padding: 20,
         elevation: 2,
         shadowColor: '#000',
         shadowOpacity: 0.2,

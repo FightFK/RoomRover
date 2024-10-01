@@ -16,7 +16,7 @@ export default function BottomNavigator() {
           let iconComponent;
 
           if (route.name === 'HomeTab') {
-            iconComponent = <Ionicons name="home" size={size} color="black" />;
+            iconComponent = <Ionicons name="home" size={size} color="black" />
           } else if (route.name === 'BillTab') {
             iconComponent = <FontAwesome name="file-text" size={size} color="black" />; // Use FontAwesome for Bill
           } else if (route.name === 'ReportTab') {
@@ -54,7 +54,11 @@ export default function BottomNavigator() {
           headerTitle: 'RoomRover',
           headerBackTitle: 'กลับ',
           headerStyle: {
-            backgroundColor: '#29B6F6'
+            backgroundColor: '#29B6F6',
+            shadowColor: '#000',
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            shadowOffset: { width: 0, height: 2 },
           },
           headerTintColor: '#fff',
         }} 
@@ -69,7 +73,11 @@ export default function BottomNavigator() {
           headerBackTitle: 'กลับ',
           headerStyle: {
             backgroundColor: '#29B6F6',
-            
+            backgroundColor: '#29B6F6',
+            shadowColor: '#000',
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            shadowOffset: { width: 0, height: 2 },
           },
           headerTintColor: '#fff',
         }} 
