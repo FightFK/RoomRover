@@ -70,7 +70,7 @@ export default function ReportList({ navigation }) {
     // ฟังก์ชัน render item ใน FlatList
     const renderReportItem = ({ item }) => {
         // Determine the border color based on the status
-        const borderColor = item.status === 'แก้ไขแล้ว' ? 'green' : 'yellow'; // Set color based on status
+        const borderColor = item.status === 'แก้ไขแล้ว' ? '#00FF00' : '#FFC107'; // Set color based on status
     
         return (
             <TouchableOpacity
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     reportItem: {
         backgroundColor: '#FFF',
         padding: 20,
-        borderWidth: 2, // Increased width for visibility
+        borderWidth: 5, // Increased width for visibility
         borderRadius: 10,
         marginBottom: 10,
         shadowColor: '#000',

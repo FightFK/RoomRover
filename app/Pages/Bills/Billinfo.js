@@ -51,7 +51,7 @@ export default function Billinfo({ route }) {
         priceRoom = '0', 
         priceWater = '0', 
         priceElectric = '0'
-   
+        
     } = billDetails || {}; // Default values
 
     const total = parseFloat(priceRoom) + parseFloat(priceWater) + parseFloat(priceElectric);
